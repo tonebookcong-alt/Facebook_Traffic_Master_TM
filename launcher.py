@@ -312,10 +312,17 @@ def chay_cac_lan_sau(py_cmd: str):
     # Khởi chạy server webui.py
     proc = subprocess.Popen([py_cmd, webui_file], cwd=APP_DIR)
 
-    # Đợi 2 giây cho web server khởi động xong
-    time.sleep(2.5)
+    print("  [2] Đang kết nối máy chủ dịch vụ và mở trình duyệt...")
+    # Đợi cho máy chủ thực sự mở cổng 5001 trước khi bật trình duyệt
+    for _ in range(15):
+        time.sleep(0.5)
+        try:
+            import urllib.request
+            urllib.request.urlopen(URL, timeout=1)
+            break
+        except Exception:
+            pass
 
-    print("  [2] Đang tự động mở trình duyệt web...")
     try:
         webbrowser.open(URL)
     except Exception:
