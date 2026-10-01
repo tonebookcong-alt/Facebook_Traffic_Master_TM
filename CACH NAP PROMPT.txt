@@ -1,0 +1,47 @@
+=============================================
+CÁCH NẠP PROMPT CAPTION MỚI (TỰ NẠP - NHANH NHẤT)
+=============================================
+
+TỪ BÂY GIỜ KHÔNG CẦN SCRIPT, KHÔNG CẦN TẮT/MỞ LẠI webui NỮA.
+
+BƯỚC 1 : Mở file  promtnew.txt  (nằm ở C:\traffic fb\promtnew.txt)
+BƯỚC 2 : Sửa prompt theo ý bạn -> nhấn lưu (Ctrl+S)
+BƯỚC 3 : XONG. Lần viết caption KẾ TIẾP đã dùng bản mới.
+
+Không cần restart webui. Không cần chạy file .py nào.
+(không cần xóa __pycache__ nữa — code đọc thẳng file lúc gọi AI)
+
+
+---------------------------------------------
+MUỐN KIỂM TRA PROMPT NÀO ĐANG CHẠY?
+---------------------------------------------
+Mở trình duyệt vào:
+
+    http://192.168.1.2:5001/api/prompt_caption
+
+Sẽ thấy dạng:
+  "nguon"          : "promtnew.txt"        <- nguồn đang dùng
+  "so_ky_tu"       : 6824                  <- độ dài prompt
+  "so_dong"        : 158
+  "dong_dau"       : "PROMPT VIẾT LẠI CAPTION FACEBOOK VIRAL – 1 BẢN HAY NHẤT (V3)"
+  "sua_gan_nhat_luc": "13/09/2026 14:26:29" <- đúng giờ bạn vừa Ctrl+S là đã ăn
+
+Nếu "dong_dau" / "so_dong" đổi ngay sau khi lưu = đã nạp thành công.
+
+
+---------------------------------------------
+LƯU Ý QUAN TRỌNG
+---------------------------------------------
+1) file nguồn DUY NHẤT của prompt caption là  promtnew.txt
+   -> sửa  promt.txt  (prompt 3 VERSION cũ) sẽ KHÔNG có tác dụng gì.
+
+2) Đừng để promtnew.txt trống. Nếu file bị xóa hoặc để trống,
+   hệ thống tự quay về bản dự phòng nằm trong  yeucau.txt
+   (khối giữa "PROMPT VIẾT LẠI CAPTION" và "Promt viết lại bài báo:").
+
+3) Prompt BÀI BÁO (mỗi câu 1 dòng riêng, 1550-1650 từ) vẫn nằm trong
+   yeucau.txt. Muốn đổi prompt bài báo thì nhắn tôi, hoặc nói rõ để tôi
+   tách riêng ra 1 file sống tương tự promtnew.txt.
+
+4) Chỉ áp dụng cho webui đang chạy (port 5001). Nếu bạn khởi động lại
+   máy thì mở webui lại bình thường, không cần làm gì thêm.

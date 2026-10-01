@@ -1,0 +1,18 @@
+{
+  "bat_tu_dong": false,
+  "khung_gio_dang": [
+    "00:00",
+    "08:00",
+    "16:00",
+    "20:00"
+  ],
+  "chay_truoc_phut": 120,
+  "cac_master": {
+    "global": true,
+    "us_1": true,
+    "us_2": true
+  },
+  "tu_dong_bu_bai": true,
+  "tu_dong_cao_khi_thieu": true,
+  "dong_bo_downloads": true
+}

@@ -1,0 +1,29 @@
+﻿# Sensitive session & proxy data
+cookies.txt
+proxies.txt
+*.env
+.env*
+
+# Python cache & build outputs
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+env/
+
+# Data outputs & logs
+du_lieu_exel/
+du_lieu_images/
+du_lieu_fb/
+du_lieu_luong/
+du_lieu_reel/
+du_lieu_traffic/content_pool.json
+*.log
+
+# IDE & OS files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

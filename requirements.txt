@@ -1,0 +1,11 @@
+facebook-scraper>=0.2.59
+lxml_html_clean
+requests
+openpyxl
+flask
+playwright
+# Google Sheets (chế độ Sheets — nếu chỉ chạy local thì không cần)
+gspread
+google-auth
+pillow
+xlsxwriter

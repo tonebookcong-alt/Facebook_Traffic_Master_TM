@@ -1,0 +1,139 @@
+# ============================================================
+# PROMPT 1 — VIẾT LẠI CAPTION FACEBOOK VIRAL – GIỮ CỐT TRUYỆN 100% (3 VERSION)
+# ============================================================
+
+## [VAI TRÒ]
+Bạn là người viết caption Facebook chuyên nghiệp, chuyên dòng storytelling /
+news drama, giỏi giữ chân người lướt và tạo tò mò thật — không giật gân rỗng.
+
+## [NHIỆM VỤ]
+Đọc kỹ caption gốc tôi cung cấp bên dưới.
+Viết lại caption thành 3 phiên bản viral, kịch tính và cuốn hút hơn —
+mỗi bản là một cách viết lại khác nhau cho CÙNG một câu chuyện.
+Ngôn ngữ đầu ra: theo đúng ngôn ngữ của caption gốc
+(gốc tiếng Anh → viết tiếng Anh; gốc tiếng Việt → viết tiếng Việt).
+
+## [YÊU CẦU QUAN TRỌNG — ÁP DỤNG CHO CẢ 3 PHIÊN BẢN]
+
+1. GIỮ NGUYÊN CỐT TRUYỆN:
+- Giữ nguyên 100% nhân vật, sự kiện, mối quan hệ, xung đột, bối cảnh và twist chính.
+- Không thêm nhân vật mới.
+- Không tạo ra một sự kiện hoàn toàn khác.
+- Không làm thay đổi ý nghĩa cốt lõi của câu chuyện.
+
+2. ĐƯỢC PHÉP CHẾ LẠI CÂU CHỮ ĐỂ TĂNG VIRAL:
+- Không chỉ thay từ đồng nghĩa.
+- Hãy viết lại theo hướng dramatic storytelling.
+- Có thể biến đổi cách diễn đạt của câu nói, câu trích dẫn hoặc khoảnh khắc
+  quan trọng để nó mạnh hơn, gây sốc hơn và kích thích tò mò hơn,
+  nhưng vẫn phải giữ đúng thông điệp gốc.
+
+3. GIỮ FORM VÀ NHỊP CAPTION:
+- Giữ độ dài tương đương caption gốc.
+- Nếu caption gốc là 1 đoạn → viết lại đúng 1 đoạn. Nếu caption gốc xuống dòng
+  thì xuống dòng, tách đoạn thì tách đoạn.
+- Giữ cấu trúc:
+  HOOK MẠNH → DRAMA/XUNG ĐỘT → CHI TIẾT BÍ ẨN → PHẢN ỨNG/HẬU QUẢ → CÂU HỎI LỚN → CTA.
+
+4. PHONG CÁCH:
+- Facebook viral storytelling / breaking news drama.
+- Câu đầu tiên phải khiến người đọc dừng lại, giữ chân họ.
+- Ưu tiên cảm xúc mạnh: shock, fear, curiosity, anger, surprise.
+- Tạo cảm giác "mọi thứ vừa thay đổi" và khiến họ tò mò cực độ.
+- Viết ngắn gọn, sắc bén, không lan man.
+- Không viết như bài báo trung lập.
+
+5. TĂNG TÍNH TÒ MÒ:
+Tập trung vào:
+- Khoảnh khắc gây sốc nhất.
+- Một câu nói bí ẩn.
+- Một chi tiết bị bỏ qua.
+- Một câu hỏi chưa có lời giải.
+- Điều khiến người đọc phải muốn click xem tiếp.
+
+6. CTA CUỐI:
+- Không bắt buộc giữ nguyên CTA gốc.
+- Có thể biến đổi linh hoạt theo phong cách viral hiện tại.
+- Ưu tiên các dạng:
+  đang viết dang dở rồi ... 👇 👇
+  👇 Full story in comments
+  👇 See the shocking detail below
+- Không thêm CTA nếu caption gốc không phù hợp.
+
+7. KẾT QUẢ:
+- Mỗi phiên bản chỉ là caption hoàn chỉnh, không nhận xét, không giải thích,
+  không nói đã thay đổi gì.
+
+## [3 PHIÊN BẢN PHẢI KHÁC NHAU]
+Cả 3 bản cùng giữ cốt truyện và form như trên, nhưng phải khác nhau rõ rệt ở:
+- câu HOOK mở đầu (tuyên bố mạnh / khoảnh khắc sốc / câu hỏi / lời thoại /
+  chi tiết bí ẩn — không lặp cùng một kiểu cho cả 3)
+- cách diễn đạt từng đoạn (không copy lẫn nhau, không chỉ đổi từ đồng nghĩa)
+- câu hỏi lớn và CTA cuối
+Đọc mỗi bản độc lập phải như một người khác nhau cùng viết lại một câu chuyện.
+
+## [OUTPUT — ĐỊNH DẠNG CỨNG]
+Chỉ trả về đúng khối sau, không thêm bất kỳ gì khác:
+
+VERSION 1
+[caption 1]
+
+VERSION 2
+[caption 2]
+
+VERSION 3
+[caption 3]
+
+Không nhận xét. Không giải thích. Không nói bạn đã thay đổi gì.
+
+## [CAPTION GỐC]
+[PASTE CAPTION HERE]
+
+
+# ============================================================
+# PROMPT 2 — VIẾT BÀI BÁO 1500–1700 TỪ (SEO)
+# ============================================================
+
+## [VAI TRÒ]
+Bạn là cây bút kể chuyện (storytelling) cho website tin giải trí, viết tiếng Anh
+chuẩn SEO, giữ chân người đọc tới dòng cuối.
+
+## [NHIỆM VỤ]
+Đầu vào: bài viết / nội dung gốc tôi đưa ở cuối prompt.
+Đầu ra: 1 bài viết tiếng Anh hoàn chỉnh, là bản FULL CONTENT của nội dung đó.
+
+## [CẤU TRÚC BÀI]
+- Độ dài: 1500–1700 từ.
+- Chia 7–8 đề mục, KHÔNG đánh số đề mục.
+- Mỗi đề mục khoảng 3–5 đoạn văn ngắn.
+- Có mở bài → nội dung chi tiết theo đề mục → kết luận hợp lý.
+- Giữa các đoạn để double space (1 dòng trống) cho dễ đọc.
+- Không viết dài lan man, không dồn chữ một cục, cũng không tách câu quá lẻ tẻ.
+
+## [KỂ CHUYỆN]
+- Phong cách kể chuyện, story — không phải văn liệt kê khô khan.
+- Được tự sáng tạo thêm tình tiết và chi tiết câu chuyện từ nội dung gốc,
+  và nghĩ ra một cái kết hợp lý.
+- Không cần là sự thật — đây là content / storytelling.
+
+## [AN TOÀN NỘI DUNG — BẮT BUỘC]
+- Phù hợp chính sách quảng cáo; tránh yếu tố dễ bị Google hạn chế phân phối.
+- Không nội dung 18+, tình dục trực diện, từ miệt thị chủng tộc (kể cả n-word),
+  hoặc nội dung kích động thù ghét.
+- Không mô tả quá chi tiết cảnh bạo lực, máu me, thương tích nghiêm trọng,
+  hành hạ hoặc tổn thương trẻ em.
+- Nếu có xung đột: tập trung vào cảm xúc, tâm lý nhân vật, sự kiện và hậu quả
+  thay vì mô tả gây sốc.
+
+## [CHẤT LƯỢNG VIẾT]
+- Viết tự nhiên như bài báo / storytelling thực tế.
+- Không cố tình kéo dài nội dung, không lặp ý, không nhồi từ khóa.
+- Ưu tiên trải nghiệm người đọc: nội dung phải có giá trị và giữ chân người xem.
+- Không thêm icon / emoji trong bài.
+
+## [OUTPUT]
+Chỉ trả về nội dung bài viết (đề mục + các đoạn). Không tiêu đề phụ kiểu markdown,
+không ghi chú, không giải thích.
+
+## [NỘI DUNG GỐC]
+[PASTE NỘI DUNG GỐC HERE]

@@ -1,0 +1,69 @@
+promt viết capption key hoàng gia cho mọi quốc gia:
+"Viết lại caption dưới đây theo phong cách Royal Viral News (Facebook hoàng gia quốc tế).
+
+BẮT BUỘC VỀ NGÔN NGỮ (QUAN TRỌNG NHẤT):
+- Caption viết lại PHẢI TRÙNG HOÀN TOÀN VỚI NGÔN NGỮ CỦA CAPTION GỐC.
+- Nếu caption gốc là tiếng Thụy Điển, viết caption bằng tiếng Thụy Điển.
+- Nếu caption gốc là tiếng Đan Mạch, viết caption bằng tiếng Đan Mạch.
+- Nếu caption gốc là tiếng Na Uy, viết caption bằng tiếng Na Uy.
+- Nếu caption gốc là tiếng Hà Lan, viết caption bằng tiếng Hà Lan.
+- Nếu caption gốc là tiếng Anh, viết caption bằng tiếng Anh.
+- TUYỆT ĐỐI KHÔNG tự ý dịch sang tiếng Anh hoặc tiếng Việt nếu caption gốc là ngôn ngữ khác.
+- Hook mở đầu và CTA kết thúc cũng phải viết bằng đúng ngôn ngữ của caption gốc.
+
+Giữ nguyên nhân vật, sự kiện, mối quan hệ, bối cảnh, ý chính và các thông tin quan trọng trong caption gốc. Không tạo thêm câu chuyện mới, nhân vật mới hoặc sự kiện mới. Tuy nhiên, được phép sáng tạo lại cách diễn đạt, thay đổi hook, nhịp kể và cách dẫn dắt để caption hấp dẫn, kịch tính và viral hơn.
+
+Giữ độ dài, format và nhịp đọc tương tự caption gốc (3-5 câu ngắn gọn, chia đoạn rõ ràng).
+
+Áp dụng công thức Royal Viral News:
+- Mở đầu bằng HOOK MẠNH VIẾT HOA bằng đúng ngôn ngữ của caption gốc (BREAKING NEWS, SENASTE NYTT, SENESTE NYT, LAATSTE NIEUWS, v.v.).
+- Nếu caption gốc có yếu tố thời gian/con số tạo cảm giác nóng (15 phút trước, 30 phút trước...) có thể điều chỉnh để tăng tính viral; nhưng các con số quan trọng của câu chuyện (23 năm, tuổi, ngày tháng, sự kiện...) phải giữ nguyên.
+- Làm nổi bật nhân vật hoàng gia trung tâm và khoảnh khắc đáng chú ý nhất.
+- Tăng cảm xúc dựa trên nội dung gốc: bất ngờ, xúc động, bí mật, quyết định quan trọng, phản ứng công chúng.
+- Tạo curiosity gap bằng câu bỏ lửng (...), chi tiết chưa tiết lộ hoặc câu hỏi mở để khiến người đọc muốn xem tiếp.
+- BẮT BUỘC Ở CUỐI CÙNG (DÒNG CHỐT): Kẹp thêm câu nói đọc thêm hoặc câu nói câu kéo người xem tò mò bấm vào xem tiếp / vào web (tương tự như 'Read more' / 'Xem chi tiết bên dưới / trong bình luận') bằng CHÍNH NGÔN NGỮ CỦA QUỐC GIA ĐÓ:
+  * Nếu tiếng Hà Lan (Nederlands): "Lees het volledige verhaal hieronder in de reacties 👇" hoặc "Lees verder in de reacties voor alle details 👇"
+  * Nếu tiếng Đan Mạch (Dansk): "Læs hele historien i kommentarfeltet herunder 👇" hoặc "Læs mere i kommentaren for alle afslørende detaljer 👇"
+  * Nếu tiếng Thụy Điển (Svenska): "Läs hela historien i kommentarerna här nedan 👇" hoặc "Läs mer i första kommentaren 👇"
+  * Nếu tiếng Na Uy (Norsk): "Les hele saken i kommentarfeltet nedenfor 👇" hoặc "Les mer i kommentarene for alle detaljer 👇"
+  * Nếu tiếng Anh (English): "Read the full story in the comments below 👇" hoặc "Full story and details linked in the first comment 👇"
+
+Cấu trúc:
+HOOK → Nhân vật + sự kiện → Chi tiết gây tò mò/cảm xúc → Phản ứng → Câu nói đọc thêm / câu kéo vào web (CTA bằng ngôn ngữ quốc gia đó).
+(LƯU Ý BẮT BUỘC: TUYỆT ĐỐI KHÔNG xuất các nhãn "HOOK:", "Nhân vật + sự kiện:", "Chi tiết gây tò mò:", "CTA:" vào văn bản caption. Chỉ xuất nội dung caption câu chữ thực tế).
+
+Văn phong: giống trailer tin nóng hoàng gia, ngắn gọn, kịch tính, cảm xúc, dễ viral trên Facebook."
+
+
+promt viết báo
+ĐỌC ĐÚNG CAPTION TÔI ĐƯA SAU ĐÂY:
+
+Viết cho tôi một bài viết dài 1300–1600 từ chuẩn SEO storytelling dựa trên nội dung caption này.
+
+BẮT BUỘC VỀ NGÔN NGỮ (QUAN TRỌNG NHẤT):
+- Ngôn ngữ bài viết và tiêu đề (HEADLINE) PHẢI TRÙNG HOÀN TOÀN VỚI NGÔN NGỮ CỦA CAPTION GỐC.
+- Nếu caption được viết bằng ngôn ngữ nào (tiếng Thụy Điển, tiếng Đan Mạch, tiếng Na Uy, tiếng Hà Lan, tiếng Anh...), hãy viết bài báo và tiêu đề bằng chính ngôn ngữ đó.
+- Giữ cách dùng từ, phong cách và văn hóa phù hợp với quốc gia hoàng gia trong caption.
+- TUYỆT ĐỐI KHÔNG tự dịch sang tiếng Anh nếu caption gốc không phải tiếng Anh.
+- Mọi đề mục "## Heading" trong bài cũng phải viết bằng chính ngôn ngữ đó.
+
+Đây là bản full storytelling mở rộng từ caption gốc. Hãy phát triển câu chuyện bằng cách bổ sung bối cảnh, cảm xúc, suy nghĩ nhân vật, phản ứng công chúng và những chi tiết hợp lý để tạo thành một bài viết hoàn chỉnh, nhưng phải giữ nguyên nhân vật, mối quan hệ, sự kiện chính và ý tưởng cốt lõi của caption gốc.
+
+YÊU CẦU ĐỊNH DẠNG VÀ CẤU TRÚC:
+- Viết theo phong cách Royal Storytelling / Royal News Feature: trang trọng, cảm xúc, cuốn hút.
+- Chia bài thành 7–8 đề mục "## Heading" rõ ràng.
+- ĐỊNH DẠNG BẮT BUỘC: mỗi câu là MỘT dòng riêng, tuyệt đối không gộp 2 câu vào cùng một dòng. Giữa các dòng câu có một dòng trống. Không viết thành một khối chữ dài.
+- Không lặp ý, không kéo dài nội dung một cách máy móc. Không nhồi từ khóa SEO.
+
+Cách triển khai:
+- Mở đầu bằng khoảnh khắc gây chú ý nhất trong caption.
+- Phát triển bối cảnh hoàng gia, vai trò của nhân vật và ý nghĩa của sự kiện.
+- Khai thác cảm xúc, trách nhiệm, gia đình, truyền thống, áp lực và phản ứng của công chúng.
+- Tạo nhịp kể như một câu chuyện đang được hé lộ từng phần.
+- Kết thúc bằng một đoạn kết cảm xúc, nhấn mạnh ý nghĩa của khoảnh khắc đối với hoàng gia và người hâm mộ.
+
+Lưu ý:
+- Không tự tạo sự kiện lớn làm thay đổi câu chuyện gốc.
+- Có thể thêm chi tiết mô tả, cảm xúc, bối cảnh và diễn biến hợp lý để bài viết tự nhiên hơn.
+- Nếu caption có yếu tố chưa được xác nhận, hãy viết theo hướng storytelling/giả định, không khẳng định như một sự kiện đã được chứng minh.
+- Nội dung phải phù hợp với văn hóa của quốc gia hoàng gia được nhắc đến trong caption.

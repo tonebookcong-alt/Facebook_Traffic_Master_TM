@@ -1,0 +1,114 @@
+# -*- coding: utf-8 -*-
+"""Cấu hình chung của tool traffic — đọc từ config.json (tự tạo nếu chưa có).
+
+Các trường:
+    cookies_file          : file cookies.txt dùng để cào Facebook
+    ai.provider           : 'mock' | 'openai' | 'anthropic' | 'gemini'
+    ai.api_key            : key API (để trống khi dùng mock)
+    ai.model              : tên model (vd gpt-4o-mini, claude-sonnet-4-5)
+    sheets.credentials_file : file JSON service account của Google (bỏ trống = chế độ local)
+    sheets.spreadsheet_id : ID Google Sheet (bỏ trống = chế độ local)
+    luong_a.so_bai_moi_nguon : số bài cào mỗi nguồn mỗi lần chạy
+    luong_a.so_lan_cuon   : số lần cuộn cho mỗi trang nguồn
+    luong_a.delay         : giây nghỉ giữa các lần cuộn
+    content_han_ngay      : content quá N ngày sẽ bị đánh dấu HET_HAN
+"""
+
+import json
+import os
+
+MAC_DINH = {
+    "cookies_file": "cookies.txt",
+    "ai": {
+        "provider": "mock",
+        "api_key": "",
+        "model": "",
+        "base_url": "",
+    },
+    "sheets": {
+        "credentials_file": "google_sheets_creds.json",
+        "spreadsheet_id": "",
+    },
+    "website": {
+        "us": {                 # Web đăng bài khu vực US
+            "api_url": "",      # VD https://primevista24.cfx.bz/api/posts
+            "api_token": "",    # API key dạng Bearer
+            "mode": "blogbio",  # 'blogbio' (form + presigned upload) | 'json' (payload JSON)
+        },
+        "global": {             # Web đăng bài khu vực GLOBAL
+            "api_url": "",      # VD https://dailyreveal281.popnexa.com/api/posts
+            "api_token": "",    # API key
+            "mode": "blogbio",
+        },
+    },
+    "luong_a": {
+        "so_bai_moi_nguon": 10,
+        "so_lan_cuon": 3,
+        "delay": 3.0,
+    },
+    "content_han_ngay": 7,
+    "proxy": {
+        "bat": True,                    # False = bỏ qua proxy hoàn toàn (dùng IP máy)
+        "proxies_file": "proxies.txt",  # dòng i ghép bộ cookie i (sticky 1:1)
+        "ti_le_phien": 0.5,             # % trang nguồn phiên 1 gánh (0-0.95)
+    },
+    "media": {
+        "logo_path": "",                # file logo PNG (trống = bỏ logo)
+        "logo_position": "bottom_left",  # top_left | top_right | bottom_left | bottom_right
+        "logo_scale": 0.17,             # chiều rộng logo = 17% chiều rộng ảnh
+        "max_size": 1080,               # cạnh dài tối đa (giữ tỷ lệ, KHÔNG crop)
+        "crop_vien": 4,                 # cắt bớt viền nguồn (px) trước khi thêm viền mới
+        "border_style": "solid",        # none | solid | gradient
+        "border_width": 3,              # độ dày viền (px)
+        "border_color": "#D4AF37",      # viền solid (màu vàng/gold)
+        "border_color2": "#D4AF37",     # dự phòng khi dùng gradient
+        "border_color3": "#D4AF37",     # dự phòng khi dùng gradient
+        "enhance_contrast": 1.10,       # chỉnh tương phản — né FB quét trùng
+        "enhance_brightness": 1.05,     # chỉnh độ sáng
+        "enhance_color": 1.22,          # chỉnh độ màu
+    },
+}
+
+DUONG_DAN = os.path.dirname(os.path.abspath(__file__))
+
+
+def duong_dan_config(path="config.json"):
+    """Đường dẫn tuyệt đối tới file cấu hình trong thư mục dự án."""
+    return os.path.join(DUONG_DAN, path)
+
+
+def _gop(de, mac_dinh):
+    """Gộp dict cấu hình — giữ giá trị người dùng, lấp chỗ trống bằng mặc định."""
+    for k, v in mac_dinh.items():
+        if k not in de:
+            de[k] = v
+        elif isinstance(v, dict):
+            _gop(de[k], v)
+    return de
+
+
+def load_config(path="config.json"):
+    """Đọc cấu hình; file chưa có thì tạo bằng mặc định."""
+    p = duong_dan_config(path)
+    if not os.path.isfile(p):
+        ghi_config(MAC_DINH, path)
+        return json.loads(json.dumps(MAC_DINH))
+    try:
+        with open(p, "r", encoding="utf-8") as f:
+            cfg = json.load(f)
+    except (json.JSONDecodeError, OSError):
+        cfg = {}
+    return _gop(cfg, json.loads(json.dumps(MAC_DINH)))
+
+
+def ghi_config(cfg, path="config.json"):
+    """Ghi cấu hình ra file (UTF-8, có xuống dòng cho dễ đọc)."""
+    p = duong_dan_config(path)
+    with open(p, "w", encoding="utf-8") as f:
+        json.dump(cfg, f, ensure_ascii=False, indent=2)
+
+
+if __name__ == "__main__":
+    cfg = load_config()
+    print(json.dumps(cfg, ensure_ascii=False, indent=2))
+    print(f"\nĐường dẫn file cấu hình: {duong_dan_config()}")
