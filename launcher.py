@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-FACEBOOK TRAFFIC MASTER — LAUNCHER (KHỞI ĐỘNG VIÊN)
+FACEBOOK TRAFFIC MASTER — LAUNCHER (KHỞI ĐỘNG VIÊN THÔNG MINH)
+- Tự động phát hiện Python trên máy, nếu thiếu tự động tải & cài đặt Python 3.12 chính thức
 - Lần 1: Cài đặt tài nguyên, kiểm tra thư viện và tải Playwright Chromium
-- Lần 2 trở đi: Mở server WebUI ngầm và tự động bật trình duyệt web local http://127.0.0.1:5001
+- Lần 2 trở đi: Dọn dẹp terminal cũ, mở server WebUI ngầm và tự bật trình duyệt web local http://127.0.0.1:5001
 """
 
 import os
@@ -25,37 +26,118 @@ PORT = 5001
 URL = f"http://127.0.0.1:{PORT}"
 
 
+def kiem_tra_python_hoat_dong(cmd: str) -> bool:
+    """Kiểm tra lệnh python có thực thi được và là Python 3 hay không."""
+    if not cmd:
+        return False
+    try:
+        res = subprocess.run([cmd, "--version"], capture_output=True, text=True, timeout=5)
+        out = (res.stdout or "") + (res.stderr or "")
+        return res.returncode == 0 and "Python 3." in out
+    except Exception:
+        return False
+
+
+def tu_dong_cai_dat_python() -> str:
+    """Tự động tải và cài đặt Python 3.12 chính thức cho máy chưa có Python (hỗ trợ cả máy mới & Sandbox)."""
+    print("=" * 70)
+    print("  ⚠️ PHÁT HIỆN MÁY TÍNH NÀY CHƯA CÀI ĐẶT MÔI TRƯỜNG PYTHON 3.12!")
+    print("=" * 70)
+    print("\n  👉 Hệ thống đang tự động tải và cài đặt Python 3.12 từ python.org...")
+    print("     (Quá trình chỉ mất khoảng 1-2 phút, tự động 100%)")
+
+    installer_url = "https://www.python.org/ftp/python/3.12.8/python-3.12.8-amd64.exe"
+    installer_path = os.path.join(APP_DIR, "python_setup.exe")
+
+    try:
+        import urllib.request
+        print("\n  [1/2] Đang tải bộ cài Python 3.12 chính thức...")
+        urllib.request.urlretrieve(installer_url, installer_path)
+        print("  -> Tải hoàn tất.")
+
+        print("\n  [2/2] Đang tự động cấu hình và cài đặt Python...")
+        # Cài đặt tự động với cờ PrependPath=1, Include_pip=1
+        cmd = [installer_path, "/passive", "InstallAllUsers=1", "PrependPath=1", "Include_pip=1"]
+        subprocess.run(cmd, timeout=300)
+
+        try:
+            os.remove(installer_path)
+        except Exception:
+            pass
+
+        # Quét lại các đường dẫn sau khi cài
+        time.sleep(2)
+        common_paths = [
+            r"C:\Program Files\Python312\python.exe",
+            r"C:\Python312\python.exe",
+            os.path.join(os.environ.get("LOCALAPPDATA", ""), "Programs", "Python", "Python312", "python.exe"),
+        ]
+        for p in common_paths:
+            if os.path.exists(p) and kiem_tra_python_hoat_dong(p):
+                print("  🎉 ĐÃ CÀI ĐẶT THÀNH CÔNG PYTHON 3.12!")
+                return p
+
+        # Kiểm tra qua PATH
+        if shutil.which("python") and kiem_tra_python_hoat_dong("python"):
+            return "python"
+    except Exception as e:
+        print(f"\n  ❌ Không thể tự động cài đặt Python: {e}")
+        print("  👉 Vui lòng vào https://www.python.org/downloads/ để cài đặt Python 3.12.")
+        print("     (Lưu ý quan trọng: Nhớ tick chọn 'Add python.exe to PATH' khi cài đặt)")
+        input("\nNhấn Enter để thoát...")
+        sys.exit(1)
+
+    return ""
+
+
 def tim_lenh_python() -> str:
     """Tìm đường dẫn thực thi của Python trên máy."""
-    # Nếu đang chạy script python
+    # 1. Nếu đang chạy script python
     if not getattr(sys, 'frozen', False):
-        return sys.executable
+        if kiem_tra_python_hoat_dong(sys.executable):
+            return sys.executable
 
-    # Nếu đang chạy từ file EXE đóng gói
-    # 1. Thử sys.executable nếu là python
     # 2. Tìm trong PATH
     candidates = ["python", "python3", "py"]
     for c in candidates:
         py_path = shutil.which(c)
-        if py_path:
+        if py_path and kiem_tra_python_hoat_dong(py_path):
             return py_path
 
-    # Thử các đường dẫn Python mặc định phổ biến trên Windows
+    # 3. Thử các đường dẫn Python mặc định phổ biến trên Windows
     user_prof = os.environ.get("USERPROFILE", "")
     local_app = os.environ.get("LOCALAPPDATA", "")
     common_paths = [
         os.path.join(local_app, "Programs", "Python", "Python312", "python.exe"),
         os.path.join(local_app, "Programs", "Python", "Python311", "python.exe"),
         os.path.join(local_app, "Programs", "Python", "Python310", "python.exe"),
+        r"C:\Program Files\Python312\python.exe",
         r"C:\Python312\python.exe",
         r"C:\Python311\python.exe",
         r"C:\Python310\python.exe",
     ]
     for p in common_paths:
-        if os.path.exists(p):
+        if os.path.exists(p) and kiem_tra_python_hoat_dong(p):
             return p
 
-    return "python"
+    # 4. Nếu hoàn toàn không tìm thấy Python hoạt động -> Tự động tải và cài đặt
+    py_cai = tu_dong_cai_dat_python()
+    if py_cai:
+        return py_cai
+
+    print("❌ Lỗi: Không thể khởi chạy do thiếu Python.")
+    input("Nhấn Enter để thoát...")
+    sys.exit(1)
+
+
+def kiem_tra_thu_vien_day_du(py_cmd: str) -> bool:
+    """Kiểm tra xem môi trường Python đã có đủ các thư viện cốt lõi hay chưa."""
+    try:
+        cmd = [py_cmd, "-c", "import flask, playwright, openpyxl, requests"]
+        res = subprocess.run(cmd, capture_output=True, timeout=10)
+        return res.returncode == 0
+    except Exception:
+        return False
 
 
 def chay_lan_dau(py_cmd: str):
@@ -200,11 +282,15 @@ def chay_cac_lan_sau(py_cmd: str):
 def main():
     py_cmd = tim_lenh_python()
 
-    if not os.path.exists(FLAG_FILE):
-        # LẦN 1: Cài đặt tài nguyên cần thiết
+    # Kiểm tra xem máy đã cài đặt tài nguyên và đủ thư viện chưa
+    da_cai_flag = os.path.exists(FLAG_FILE)
+    da_du_thuvien = kiem_tra_thu_vien_day_du(py_cmd)
+
+    if not da_cai_flag or not da_du_thuvien:
+        # Nếu chưa có cờ hoặc thiếu thư viện -> Tự động chạy quy trình cài đặt lần đầu
         chay_lan_dau(py_cmd)
     else:
-        # LẦN 2 TRỞ ĐI: Mở WebUI và tự bật trình duyệt
+        # Đã đủ mọi tài nguyên -> Khởi chạy WebUI và tự bật trình duyệt
         chay_cac_lan_sau(py_cmd)
 
 
