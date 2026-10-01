@@ -6,8 +6,6 @@ proxies.txt
 
 # Python cache & build outputs
 __pycache__/
-*.pyc
-*.pyo
 .venv/
 venv/
 env/
