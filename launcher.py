@@ -38,6 +38,56 @@ def kiem_tra_python_hoat_dong(cmd: str) -> bool:
         return False
 
 
+def tai_file_da_tang(url: str, target_path: str) -> bool:
+    """Tải file từ internet với cơ chế đa tầng, tự động vượt lỗi SSL của Sandbox/máy mới."""
+    # Tầng 1: Python urllib với unverified SSL context
+    try:
+        import urllib.request
+        import ssl
+        ctx = ssl._create_unverified_context()
+        print("  -> Đang kết nối máy chủ tải về...")
+        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"})
+        with urllib.request.urlopen(req, context=ctx, timeout=60) as resp, open(target_path, "wb") as out_f:
+            tong_bytes = int(resp.headers.get("Content-Length") or 0)
+            da_tai = 0
+            while True:
+                chunk = resp.read(65536)
+                if not chunk:
+                    break
+                out_f.write(chunk)
+                da_tai += len(chunk)
+                if tong_bytes > 0:
+                    pct = int(da_tai * 100 / tong_bytes)
+                    mb = da_tai / (1024 * 1024)
+                    tong_mb = tong_bytes / (1024 * 1024)
+                    print(f"\r  -> Tiến độ tải: {pct}% ({mb:.1f} MB / {tong_mb:.1f} MB)...", end="", flush=True)
+            print()
+        if os.path.exists(target_path) and os.path.getsize(target_path) > 1000000:
+            return True
+    except Exception as e:
+        print(f"\n  (Tầng 1 urllib gặp lỗi: {e}. Đang chuyển sang Tầng 2 curl...)")
+
+    # Tầng 2: Dùng curl.exe tích hợp sẵn của Windows (cờ -k bỏ qua lỗi chứng chỉ SSL)
+    try:
+        cmd_curl = ["curl.exe", "-k", "-L", "-o", target_path, url]
+        res = subprocess.run(cmd_curl, timeout=180)
+        if res.returncode == 0 and os.path.exists(target_path) and os.path.getsize(target_path) > 1000000:
+            return True
+    except Exception:
+        pass
+
+    # Tầng 3: Dùng PowerShell bypass SSL
+    try:
+        ps = f"[System.Net.ServicePointManager]::ServerCertificateValidationCallback = {{$true}}; (New-Object System.Net.WebClient).DownloadFile('{url}', '{target_path}')"
+        res = subprocess.run(["powershell.exe", "-Command", ps], timeout=180)
+        if res.returncode == 0 and os.path.exists(target_path) and os.path.getsize(target_path) > 1000000:
+            return True
+    except Exception:
+        pass
+
+    return False
+
+
 def tu_dong_cai_dat_python() -> str:
     """Tự động tải và cài đặt Python 3.12 chính thức cho máy chưa có Python (hỗ trợ cả máy mới & Sandbox)."""
     print("=" * 70)
@@ -50,9 +100,11 @@ def tu_dong_cai_dat_python() -> str:
     installer_path = os.path.join(APP_DIR, "python_setup.exe")
 
     try:
-        import urllib.request
         print("\n  [1/2] Đang tải bộ cài Python 3.12 chính thức...")
-        urllib.request.urlretrieve(installer_url, installer_path)
+        ok_tai = tai_file_da_tang(installer_url, installer_path)
+        if not ok_tai or not os.path.exists(installer_path):
+            raise Exception("Không thể tải file bộ cài Python sau 3 tầng dự phòng.")
+
         print("  -> Tải hoàn tất.")
 
         print("\n  [2/2] Đang tự động cấu hình và cài đặt Python...")
@@ -172,7 +224,13 @@ def chay_lan_dau(py_cmd: str):
     req_file = os.path.join(APP_DIR, "requirements.txt")
     if os.path.exists(req_file):
         try:
-            cmd = [py_cmd, "-m", "pip", "install", "-r", req_file, "--quiet"]
+            cmd = [
+                py_cmd, "-m", "pip", "install", "-r", req_file,
+                "--trusted-host", "pypi.org",
+                "--trusted-host", "files.pythonhosted.org",
+                "--trusted-host", "pypi.python.org",
+                "--quiet"
+            ]
             print("  -> Đang nạp các gói hỗ trợ (vui lòng đợi 30-60 giây)...")
             res = subprocess.run(cmd, cwd=APP_DIR)
             if res.returncode == 0:
