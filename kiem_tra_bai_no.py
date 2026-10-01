@@ -429,41 +429,25 @@ def danh_dau_bai_no_ok(identifier: str, da_gan_cmt: bool = True) -> tuple[bool, 
 # ==========================================
 
 def lay_telegram_bot_token() -> str:
-    """Đọc botToken từ cấu hình cau_hinh_bai_no.json hoặc config.json hoặc biến môi trường."""
-    # 1. Đọc từ cau_hinh_bai_no.json
-    try:
-        cfg = doc_cau_hinh()
-        tok = cfg.get("telegram_bot_token", "").strip()
-        if tok:
-            return tok
-    except Exception:
-        pass
-
-    # 2. Đọc từ config.json
-    try:
-        cfg_file = os.path.join(DIR_ROOT, "config.json")
-        if os.path.exists(cfg_file):
-            with open(cfg_file, "r", encoding="utf-8") as f:
-                c = json.load(f)
-            tok = (c.get("telegram", {}).get("bot_token") or "").strip()
+    """Đọc botToken từ cấu hình openclaw.json nếu có."""
+    oc_path = os.path.expanduser(r"~\.openclaw\openclaw.json")
+    if os.path.exists(oc_path):
+        try:
+            with open(oc_path, "r", encoding="utf-8") as f:
+                oc = json.load(f)
+            tok = oc.get("channels", {}).get("telegram", {}).get("botToken")
             if tok:
-                return tok
-    except Exception:
-        pass
-
-    # 3. Đọc từ biến môi trường
-    env_tok = os.environ.get("TELEGRAM_BOT_TOKEN", "").strip()
-    if env_tok:
-        return env_tok
-
+                return tok.strip()
+        except Exception:
+            pass
     return ""
 
 
-def gui_thong_bao_telegram_truc_tiep(target: str, noi_dung: str, custom_token: str = "") -> tuple[bool, str]:
-    """Gửi trực tiếp qua Telegram Bot API chính thức (hỗ trợ cả Chat ID cá nhân và Group ID)."""
-    token = custom_token.strip() if custom_token else lay_telegram_bot_token()
+def gui_thong_bao_telegram_truc_tiep(target: str, noi_dung: str) -> tuple[bool, str]:
+    """Gửi trực tiếp qua Telegram Bot API (chuẩn 100% multiline và emoji, không phụ thuộc CLI)."""
+    token = lay_telegram_bot_token()
     if not token:
-        return False, "Chưa nhập Telegram Bot Token. Vui lòng vào Cài Đặt hoặc Tab Giám Sát Bài Nổ để điền Bot Token (lấy từ @BotFather)."
+        return False, "Không tìm thấy telegram botToken trong cấu hình OpenClaw"
 
     import urllib.request
     import urllib.parse
@@ -492,30 +476,54 @@ def gui_thong_bao_telegram_truc_tiep(target: str, noi_dung: str, custom_token: s
         return False, f"Lỗi kết nối Telegram: {e}"
 
 
-def gui_thong_bao_telegram(target: str, noi_dung: str, custom_token: str = "") -> tuple[bool, str]:
-    """Gửi thông báo qua Telegram Bot API (tự động xử lý Group ID thiếu dấu trừ '-')."""
+def gui_thong_bao_openclaw(target: str, noi_dung: str) -> tuple[bool, str]:
+    """Gửi thông báo qua Telegram API trực tiếp hoặc OpenClaw (hỗ trợ cả Chat ID cá nhân và Group ID)."""
     if not target or not str(target).strip():
         return False, "Chưa cấu hình Telegram Target (Chat ID / Group ID)"
     target = str(target).strip()
     if target == "5314274362":
         target = "-5314274362"
 
-    ok_direct, msg_direct = gui_thong_bao_telegram_truc_tiep(target, noi_dung, custom_token)
+    # Cách 1: Gửi trực tiếp qua Telegram API để đảm bảo giữ trọn vẹn multiline, emoji và link preview
+    ok_direct, msg_direct = gui_thong_bao_telegram_truc_tiep(target, noi_dung)
     if ok_direct:
         return True, msg_direct
 
-    # Nếu lỗi và target chưa có dấu '-', thử tự động thêm '-'
+    # Nếu lỗi do thiếu dấu trừ '-', thử tự động thêm '-'
     if not target.startswith("-"):
         retry_target = f"-{target}"
-        ok_retry, msg_retry = gui_thong_bao_telegram_truc_tiep(retry_target, noi_dung, custom_token)
+        ok_retry, msg_retry = gui_thong_bao_telegram_truc_tiep(retry_target, noi_dung)
         if ok_retry:
             return True, msg_retry
 
-    return False, msg_direct
+    # Cách 2: Gọi qua OpenClaw CLI
+    openclaw_mjs = os.path.expanduser(r"~\AppData\Roaming\npm\node_modules\openclaw\openclaw.mjs")
+    if os.path.exists(openclaw_mjs):
+        cmd = ["node", openclaw_mjs, "message", "send", "--channel", "telegram", "--target", target, "-m", noi_dung]
+    else:
+        cmd = ["openclaw.cmd", "message", "send", "--channel", "telegram", "--target", target, "-m", noi_dung]
 
+    try:
+        res = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", timeout=30)
+        if res.returncode == 0:
+            return True, res.stdout.strip() or "Đã gửi thành công qua OpenClaw"
 
-# Alias để giữ tương thích ngược
-gui_thong_bao_openclaw = gui_thong_bao_telegram
+        # Nếu thất bại vì chat not found và target chưa có dấu '-', thử lại với dấu '-'
+        combined = (res.stderr or "") + " " + (res.stdout or "")
+        if "chat not found" in combined.lower() and not target.startswith("-"):
+            target_fix = f"-{target}"
+            cmd_retry = list(cmd)
+            for idx, c in enumerate(cmd_retry):
+                if c == target:
+                    cmd_retry[idx] = target_fix
+            res_retry = subprocess.run(cmd_retry, capture_output=True, text=True, encoding="utf-8", timeout=30)
+            if res_retry.returncode == 0:
+                return True, res_retry.stdout.strip() or "Đã gửi thành công qua OpenClaw"
+
+        err = res.stderr.strip() or res.stdout.strip()
+        return False, f"Lỗi gửi: {msg_direct} | OpenClaw: {err}"
+    except Exception as e:
+        return False, f"Lỗi gửi: {msg_direct} | {e}"
 
 
 # ==========================================
