@@ -345,15 +345,12 @@ def chay_cac_lan_sau(py_cmd: str):
 def main():
     py_cmd = tim_lenh_python()
 
-    # Kiểm tra xem máy đã cài đặt tài nguyên và đủ thư viện chưa
-    da_cai_flag = os.path.exists(FLAG_FILE)
-    da_du_thuvien = kiem_tra_thu_vien_day_du(py_cmd)
-
-    if not da_cai_flag or not da_du_thuvien:
-        # Nếu chưa có cờ hoặc thiếu thư viện -> Tự động chạy quy trình cài đặt lần đầu
+    # Phân chia rạch ròi 2 lần chạy:
+    # - Nếu chưa có file cờ installed.flag -> LẦN 1: Cài đặt tài nguyên và tạo cờ
+    # - Nếu đã có file cờ installed.flag -> LẦN 2 TRỞ ĐI: Mở thẳng WebUI 5001
+    if not os.path.exists(FLAG_FILE):
         chay_lan_dau(py_cmd)
     else:
-        # Đã đủ mọi tài nguyên -> Khởi chạy WebUI và tự bật trình duyệt
         chay_cac_lan_sau(py_cmd)
 
 

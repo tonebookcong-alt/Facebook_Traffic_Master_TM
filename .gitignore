@@ -1,4 +1,4 @@
-﻿# Sensitive session & proxy data
+# Sensitive session & proxy data
 cookies.txt
 proxies.txt
 *.env
@@ -8,7 +8,6 @@ proxies.txt
 __pycache__/
 *.pyc
 *.pyo
-*.pyd
 .venv/
 venv/
 env/
