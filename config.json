@@ -2,7 +2,7 @@
   "cookies_file": "cookies.txt",
   "ai": {
     "provider": "custom",
-    "api_key": "sk-1601e321ce9a1c7602a5dc9f069780f0fa2894ea635da8bd",
+    "api_key": "",
     "model": "deepseek-v4-flash",
     "base_url": "https://vyceai.com/v1",
     "song_song": 2
@@ -13,13 +13,13 @@
   },
   "website": {
     "us": {
-      "api_url": "https://primevista24.cfx.bz/api/posts",
-      "api_token": "l82q4d9n5sa41sim8n07belxfr3pzy",
+      "api_url": "https://moneycomehere.cfx.bz/api/posts",
+      "api_token": "myio4tv63mpbyxn7j1h13mc2exm2bw",
       "mode": "blogbio"
     },
     "global": {
-      "api_url": "https://dailyreveal281.popnexa.com/api/posts",
-      "api_token": "yn482dpuwp9g623oe4jlwq7xefxg9x",
+      "api_url": "https://moneycomehere.cfx.bz/api/posts",
+      "api_token": "myio4tv63mpbyxn7j1h13mc2exm2bw",
       "mode": "blogbio"
     }
   },

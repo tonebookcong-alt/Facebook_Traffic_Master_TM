@@ -221,10 +221,9 @@
             </button>
             <ul class="dropdown-menu dropdown-menu-end shadow-sm" style="font-size: 0.85rem; min-width: 220px;">
               <li class="dropdown-header text-uppercase fw-bold text-muted small"><i class="fa-solid fa-bolt text-warning me-1"></i> Xuất Vòng Mới</li>
-              <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="xuatMaster(1, 'us')"><i class="fa-solid fa-flag-usa text-danger me-2"></i><b>Xuất Master 1 (US)</b></a></li>
-              <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="xuatMaster(2, 'us')"><i class="fa-solid fa-flag-usa text-primary me-2"></i><b>Xuất Master 2 (US 2)</b></a></li>
+              <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="xuatMaster(1, 'us')"><i class="fa-solid fa-flag-usa text-danger me-2"></i><b>Xuất Master (US)</b></a></li>
               <li><hr class="dropdown-divider my-1"></li>
-              <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="xuatMaster(1, 'global')"><i class="fa-solid fa-earth-americas text-success me-2"></i><b>Xuất Master GLOBAL</b></a></li>
+              <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="xuatMaster(1, 'global')"><i class="fa-solid fa-earth-americas text-success me-2"></i><b>Xuất Master (GLOBAL)</b></a></li>
             </ul>
           </div>
 
@@ -235,10 +234,9 @@
             </button>
             <ul class="dropdown-menu dropdown-menu-end shadow-sm" style="font-size: 0.85rem; min-width: 220px;">
               <li class="dropdown-header text-uppercase fw-bold text-muted small"><i class="fa-solid fa-bandage text-warning me-1"></i> Vá dòng CHỜ BÀI</li>
-              <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="vaMaster(1, 'us')"><i class="fa-solid fa-flag-usa text-danger me-2"></i><b>Vá Master 1 (US)</b></a></li>
-              <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="vaMaster(2, 'us')"><i class="fa-solid fa-flag-usa text-primary me-2"></i><b>Vá Master 2 (US 2)</b></a></li>
+              <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="vaMaster(1, 'us')"><i class="fa-solid fa-flag-usa text-danger me-2"></i><b>Vá Master (US)</b></a></li>
               <li><hr class="dropdown-divider my-1"></li>
-              <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="vaMaster(1, 'global')"><i class="fa-solid fa-earth-americas text-success me-2"></i><b>Vá Master GLOBAL</b></a></li>
+              <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="vaMaster(1, 'global')"><i class="fa-solid fa-earth-americas text-success me-2"></i><b>Vá Master (GLOBAL)</b></a></li>
             </ul>
           </div>
         </div>
@@ -310,7 +308,7 @@
               <div class="card-body">
                 <div class="mb-3">
                   <label class="form-label fw-bold">Danh sách Fanpage nguồn (mỗi dòng 1 trang):</label>
-                  <textarea id="scrapePages" class="form-control" rows="4" placeholder="wx.phanvanvu&#10;https://facebook.com/nfl"></textarea>
+                  <textarea id="scrapePages" class="form-control" rows="4" placeholder="https://facebook.com/nfl&#10;https://facebook.com/dallascowboys&#10;(Mỗi dòng 1 link fanpage hoặc ID trang)"></textarea>
                   <div class="mt-2">
                     <div class="nhom-check-head">
                       <label class="form-label small fw-bold mb-0 text-nowrap">📚 Hoặc tích CHỦ ĐỀ lấy từ kho nguồn:</label>
@@ -968,10 +966,9 @@
                 </button>
                 <ul class="dropdown-menu shadow-sm" style="font-size: 0.85rem; min-width: 230px;">
                   <li class="dropdown-header text-uppercase fw-bold text-muted small"><i class="fa-solid fa-bolt text-warning me-1"></i> Xuất Vòng Mới</li>
-                  <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="xuatMaster(1, 'us')"><i class="fa-solid fa-flag-usa text-danger me-2"></i><b>Xuất Master 1 (US)</b> <span class="text-muted small">(danh_sach_uid.xlsx)</span></a></li>
-                  <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="xuatMaster(2, 'us')"><i class="fa-solid fa-flag-usa text-primary me-2"></i><b>Xuất Master 2 (US 2)</b> <span class="text-muted small">(danh_sach_uid_2.xlsx)</span></a></li>
+                  <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="xuatMaster(1, 'us')"><i class="fa-solid fa-flag-usa text-danger me-2"></i><b>Xuất Master (US)</b> <span class="text-muted small">(MASTER_DANG_BAI_US.xlsx)</span></a></li>
                   <li><hr class="dropdown-divider my-1"></li>
-                  <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="xuatMaster(1, 'global')"><i class="fa-solid fa-earth-americas text-success me-2"></i><b>Xuất Master GLOBAL</b> <span class="text-muted small">(MASTER_DANG_BAI_GLOBAL.xlsx)</span></a></li>
+                  <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="xuatMaster(1, 'global')"><i class="fa-solid fa-earth-americas text-success me-2"></i><b>Xuất Master (GLOBAL)</b> <span class="text-muted small">(MASTER_DANG_BAI_GLOBAL.xlsx)</span></a></li>
                 </ul>
               </div>
 
@@ -982,10 +979,9 @@
                 </button>
                 <ul class="dropdown-menu shadow-sm" style="font-size: 0.85rem; min-width: 230px;">
                   <li class="dropdown-header text-uppercase fw-bold text-muted small"><i class="fa-solid fa-bandage text-warning me-1"></i> Vá dòng CHỜ BÀI</li>
-                  <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="vaMaster(1, 'us')"><i class="fa-solid fa-flag-usa text-danger me-2"></i><b>Vá Master 1 (US)</b> <span class="text-muted small">(Hiện tại)</span></a></li>
-                  <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="vaMaster(2, 'us')"><i class="fa-solid fa-flag-usa text-primary me-2"></i><b>Vá Master 2 (US 2)</b> <span class="text-muted small">(Mới)</span></a></li>
+                  <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="vaMaster(1, 'us')"><i class="fa-solid fa-flag-usa text-danger me-2"></i><b>Vá Master (US)</b></a></li>
                   <li><hr class="dropdown-divider my-1"></li>
-                  <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="vaMaster(1, 'global')"><i class="fa-solid fa-earth-americas text-success me-2"></i><b>Vá Master GLOBAL</b></a></li>
+                  <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="vaMaster(1, 'global')"><i class="fa-solid fa-earth-americas text-success me-2"></i><b>Vá Master (GLOBAL)</b></a></li>
                 </ul>
               </div>
 
@@ -1576,7 +1572,7 @@
       document.getElementById('fullAutoTextarea').disabled = (v === 'kho');
       document.getElementById('fullAutoTextarea').placeholder = (v === 'kho')
         ? '(Mặc định lấy từ du_lieu_traffic/source_config.json — để trống textarea cũng được)'
-        : 'Mỗi dòng 1 trang (vd: wx.phanvanvu)';
+        : 'Mỗi dòng 1 trang (vd: https://facebook.com/nfl)';
       if (typeof capNhatSoLuongGoiY === 'function') capNhatSoLuongGoiY();
     }
     // Dựng bộ tham số FULL AUTO từ modal (dùng chung: chạy ngay + lưu lịch hẹn)
