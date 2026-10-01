@@ -32,7 +32,6 @@ from flask import (Flask, Response, jsonify, render_template, request,
 
 from config import DUONG_DAN, load_config, ghi_config
 from google_sheets import lay_store
-import license_manager
 import scraper
 import luong_b
 import dong_goi
@@ -2720,68 +2719,33 @@ def api_mo_thu_muc():
 
 
 # ===================================================================
-# 7. API TAB 6: CẤU HÌNH AI & BẢN QUYỀN
+# 7. API TAB 6: CẤU HÌNH AI
 # ===================================================================
-@app.route("/api/license/trang_thai", methods=["GET"])
-def api_license_trang_thai():
-    """Kiểm tra trạng thái bản quyền hiện tại."""
-    force = request.args.get("force", "").lower() in ("1", "true")
-    res = license_manager.kiem_tra_ban_quyen(force_online=force)
-    return jsonify(res)
-
-
-@app.route("/api/license/kich_hoat", methods=["POST"])
-def api_license_kich_hoat():
-    """Kích hoạt bản quyền với key và mã nhận diện."""
-    data = request.json or {}
-    key = (data.get("license_key") or "").strip()
-    ma = (data.get("ma_nhan_dien") or "").strip()
-    res = license_manager.kich_hoat_ban_quyen(key, ma)
-    return jsonify(res)
-
-
-@app.route("/api/license/doi_ma_nhan_dien", methods=["POST"])
-def api_license_doi_ma_nhan_dien():
-    """Cập nhật mã nhận diện tiêu đề bài báo."""
-    data = request.json or {}
-    ma = (data.get("ma_nhan_dien") or "").strip()
-    if not ma:
-        return jsonify({"ok": False, "message": "Vui lòng nhập mã nhận diện (ví dụ: TH)"})
-    license_manager.cap_nhat_ma_nhan_dien(ma)
-    return jsonify({"ok": True, "message": "Đã cập nhật mã nhận diện thành công!", "ma_nhan_dien": ma})
-
-
 @app.route("/api/cau_hinh", methods=["GET"])
 def api_lay_cau_hinh():
-    """Trả về cấu hình AI hiện tại (provider, api_key, model, base_url, ma_nhan_dien)."""
+    """Trả về cấu hình AI hiện tại (provider, api_key, model, base_url)."""
     cfg = load_config()
-    ma_nd = cfg.get("ma_nhan_dien") or license_manager.lay_ma_nhan_dien_hien_tai()
     return jsonify({
         "ok": True,
         "provider": cfg["ai"]["provider"],
         "api_key": cfg["ai"]["api_key"],
         "model": cfg["ai"]["model"],
         "base_url": cfg["ai"].get("base_url") or "",
-        "ma_nhan_dien": ma_nd,
     })
 
 
 @app.route("/api/luu_cau_hinh", methods=["POST"])
 def api_luu_cau_hinh():
-    """Lưu cấu hình AI và mã nhận diện vào config.json."""
+    """Lưu cấu hình AI vào config.json."""
     data = request.json or {}
     cfg = load_config()
     cfg["ai"]["provider"] = (data.get("provider") or cfg["ai"]["provider"]).strip()
     cfg["ai"]["api_key"] = (data.get("api_key") or cfg["ai"]["api_key"]).strip()
     cfg["ai"]["model"] = (data.get("model") or cfg["ai"]["model"]).strip()
     cfg["ai"]["base_url"] = (data.get("base_url") or cfg["ai"].get("base_url") or "").strip()
-    if "ma_nhan_dien" in data:
-        ma_nd = str(data["ma_nhan_dien"]).strip()
-        cfg["ma_nhan_dien"] = ma_nd
-        license_manager.cap_nhat_ma_nhan_dien(ma_nd)
     try:
         ghi_config(cfg)
-        return jsonify({"ok": True, "message": "Đã lưu cấu hình AI và mã nhận diện thành công."})
+        return jsonify({"ok": True, "message": "Đã lưu cấu hình AI thành công."})
     except Exception as e:
         return jsonify({"ok": False, "loi": f"Lỗi ghi cấu hình: {e}"}), 500
 
@@ -2888,8 +2852,6 @@ def api_bai_no_cau_hinh():
     if request.method == "POST":
         data = request.get_json(silent=True) or {}
         cfg = kiem_tra_bai_no.doc_cau_hinh()
-        if "telegram_bot_token" in data:
-            cfg["telegram_bot_token"] = str(data["telegram_bot_token"]).strip()
         if "telegram_target" in data:
             val = str(data["telegram_target"]).strip()
             if val == "5314274362":
@@ -2939,32 +2901,24 @@ def api_bai_no_quet_ngay():
 @app.route("/api/bai_no/gui_test", methods=["POST"])
 def api_bai_no_gui_test():
     data = request.get_json(silent=True) or {}
-    cfg = kiem_tra_bai_no.doc_cau_hinh()
-    bot_token = (data.get("bot_token") or "").strip() or cfg.get("telegram_bot_token", "").strip()
-    target = (data.get("target") or "").strip() or cfg.get("telegram_target", "").strip()
+    target = (data.get("target") or "").strip()
+    if not target:
+        cfg = kiem_tra_bai_no.doc_cau_hinh()
+        target = cfg.get("telegram_target", "").strip()
     if target == "5314274362":
         target = "-5314274362"
-    if not bot_token:
-        return jsonify({"ok": False, "thong_bao": "Vui lòng nhập Telegram Bot Token (lấy từ @BotFather)"})
     if not target:
         return jsonify({"ok": False, "thong_bao": "Vui lòng nhập Telegram Target (Chat ID / Group ID)"})
     test_msg = (
-        "🔔 [TEST KẾT NỐI TELEGRAM BOT]\n"
+        "🔔 [TEST KẾT NỐI OPENCLAW]\n"
         "✅ Hệ thống Giám Sát Bài Nổ 24/24 đã kết nối Telegram thành công!\n"
         f"⏰ Thời gian: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
     )
-    ok, err = kiem_tra_bai_no.gui_thong_bao_telegram(target, test_msg, custom_token=bot_token)
-    if ok:
-        # Tự động lưu cấu hình nếu test thành công
-        cap_nhat = False
-        if cfg.get("telegram_bot_token") != bot_token:
-            cfg["telegram_bot_token"] = bot_token
-            cap_nhat = True
-        target_save = target
-        if target.startswith("-") and cfg.get("telegram_target") != target_save:
-            cfg["telegram_target"] = target_save
-            cap_nhat = True
-        if cap_nhat:
+    ok, err = kiem_tra_bai_no.gui_thong_bao_openclaw(target, test_msg)
+    if ok and target.startswith("-"):
+        cfg = kiem_tra_bai_no.doc_cau_hinh()
+        if cfg.get("telegram_target") != target:
+            cfg["telegram_target"] = target
             kiem_tra_bai_no.luu_cau_hinh(cfg)
     return jsonify({"ok": ok, "thong_bao": err if ok else f"Gửi thất bại: {err}", "target_chuan": target if ok else None})
 

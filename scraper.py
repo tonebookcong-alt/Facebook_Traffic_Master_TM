@@ -150,8 +150,51 @@ def _doc_cau_hinh_proxy(ti_le_mac_dinh: float = 0.5):
         cfg.get("ti_le_phien") or ti_le_mac_dinh)
 
 
+def loc_proxy_song(ds_proxy: list, callback=None, max_timeout=3.5) -> list:
+    """Kiểm tra nhanh kết nối proxy (song song trong ~3s).
+    Bỏ các proxy chết/hết hạn để tránh Chromium bị treo net::ERR_TIMED_OUT 60s.
+    Nếu toàn bộ proxy đều chết -> tự động cảnh báo và trả về [] để fallback về IP máy."""
+    if not ds_proxy:
+        return []
+    import urllib.request
+    from concurrent.futures import ThreadPoolExecutor
+
+    def _test(px):
+        if not px:
+            return True
+        try:
+            handler = urllib.request.ProxyHandler({'http': px, 'https': px})
+            opener = urllib.request.build_opener(handler)
+            req = urllib.request.Request("http://httpbin.org/ip", headers={"User-Agent": "Mozilla/5.0"})
+            with opener.open(req, timeout=max_timeout) as resp:
+                return resp.status == 200
+        except Exception:
+            return False
+
+    with ThreadPoolExecutor(max_workers=min(15, len(ds_proxy))) as ex:
+        results = list(ex.map(_test, ds_proxy))
+
+    song = [px for px, ok in zip(ds_proxy, results) if ok]
+    so_chet = len(ds_proxy) - len(song)
+
+    if so_chet > 0:
+        msg = (f"⚠️ [PROXY] Phát hiện {so_chet}/{len(ds_proxy)} proxy bị CHẾT hoặc HẾT HẠN (không kết nối được)! "
+               f"Đã tự động loại bỏ để tránh lỗi net::ERR_TIMED_OUT.")
+        print(f"\n{msg}")
+        phat_su_kien(callback, {"loai": "log", "noi_dung": msg})
+
+    if not song and ds_proxy:
+        canh_bao = ("🚨 [CẢNH BÁO] TOÀN BỘ PROXY trong proxies.txt ĐÃ HẾT HẠN HOẶC MẤT KẾT NỐI! "
+                    "Hệ thống TỰ ĐỘNG CHUYỂN SANG IP MÁY THẬT để phiên cào chạy bình thường, không gián đoạn.")
+        print(f"\n{canh_bao}")
+        phat_su_kien(callback, {"loai": "canh_bao", "noi_dung": canh_bao})
+
+    return song
+
+
 def nap_cac_phien(cookies: str = None, proxies: str = "proxies.txt",
-                  ti_le: float = 0.5, so_phien_toi_da: int = 50) -> list:
+                  ti_le: float = 0.5, so_phien_toi_da: int = 50,
+                  callback=None, kiem_tra_song: bool = False) -> list:
     """Dựng danh sách PHIÊN cào: mỗi phiên = 1 bộ cookie + 1 IP proxy (sticky 1:1).
 
     File cookie tìm theo thứ tự (nếu cookies được chỉ định):
@@ -170,7 +213,11 @@ def nap_cac_phien(cookies: str = None, proxies: str = "proxies.txt",
                     thu_tu.append(mau)
         thu_tu = thu_tu[:max(1, so_phien_toi_da or 50)]
 
-    ds_proxy = cao_fb.doc_proxies(proxies) if proxies else []
+    ds_proxy_raw = cao_fb.doc_proxies(proxies) if proxies else []
+    if kiem_tra_song and ds_proxy_raw:
+        ds_proxy = loc_proxy_song(ds_proxy_raw, callback=callback)
+    else:
+        ds_proxy = ds_proxy_raw
 
     # Nếu có proxy: chia phiên theo proxy (chế độ chính - hỗ trợ cào không cần cookie)
     if ds_proxy:
@@ -658,12 +705,16 @@ def run_cào(trang_ho: list, pages: int = 3, limit: int = 0, per_page: int = 0,
     print(f"    {pages} lần cuộn/trang, tối đa {per_page or limit or 'không'} bài/trang")
     # Nạp các PHIÊN (mỗi phiên = 1 bộ cookie + 1 IP proxy, ghép 1:1).
     # Không có proxies.txt -> vẫn chạy đúng như trước (1 phiên, IP máy).
-    ds_phien = nap_cac_phien(cookies, proxies_path, ti_le_phien)
+    ds_phien = nap_cac_phien(cookies, proxies_path, ti_le_phien, callback=callback, kiem_tra_song=True)
     if not ds_phien:
         cookies_playwright = cao_fb.doc_cookies(cookies) if cookies else None
         if cookies_playwright:
             ds_phien = [{"ten": os.path.basename(cookies),
                          "cookies": cookies_playwright, "proxy": None,
+                         "ti_le": 1.0}]
+        else:
+            ds_phien = [{"ten": "IP Máy (Không Cookie)",
+                         "cookies": None, "proxy": None,
                          "ti_le": 1.0}]
     elif len(ds_phien) > 1:
         print(f"    [i] Dùng {len(ds_phien)} phiên (cookie + proxy) luân phiên "
@@ -705,35 +756,22 @@ def run_cào(trang_ho: list, pages: int = 3, limit: int = 0, per_page: int = 0,
     lock_kq = threading.Lock()
     lock_cb = threading.Lock()
 
-    # KÍCH HOẠT CHẾ ĐỘ CÀO ĐA LUỒNG SONG SONG:
-    # - Nếu có Proxy: Chạy theo số lượng Proxy (tối đa theo RAM)
-    # - Nếu KHÔNG CÓ Proxy (IP máy thật): Tự động đặt 2 luồng song song an toàn, chống checkpoint/block IP!
+    # KÍCH HOẠT CHẾ ĐỘ CÀO ĐA LUỒNG SONG SONG THEO PROXY:
+    # Điều kiện: Có từ 2 phiên (proxy) trở lên VÀ có từ 2 trang cần cào trở lên!
     so_luong_phien = len(ds_phien) if ds_phien else 1
-    tran_theo_ram = cao_fb.gioi_han_trinh_duyet_theo_ram()
+    chay_song_song = (so_luong_phien > 1 and len(trang_ho) > 1)
 
-    if so_luong_phien > 1 and len(trang_ho) > 1:
+    if chay_song_song:
+        # Mỗi worker = 1 trình duyệt thật (~500-700MB) -> giới hạn theo RAM
+        # còn trống để tránh tràn RAM khi proxies.txt có nhiều proxy.
+        tran_theo_ram = cao_fb.gioi_han_trinh_duyet_theo_ram()
         so_worker = min(so_luong_phien, len(trang_ho), tran_theo_ram)
         thong_bao_multi = (
             f"🚀 [MULTI-PROXY] Kích hoạt cào {so_worker} luồng song song "
             f"(tương ứng {so_worker} proxy độc lập) cho {len(trang_ho)} trang!"
         )
-    elif len(trang_ho) >= 2:
-        # Không có Proxy: Cố định chuẩn 2 luồng song song an toàn tuyệt đối
-        so_worker = min(2, len(trang_ho), tran_theo_ram)
-        thong_bao_multi = (
-            f"🚀 [AN TOÀN IP THẬT] Kích hoạt cào {so_worker} luồng song song "
-            f"(chuẩn an toàn Facebook, chống chặn IP) cho {len(trang_ho)} trang!"
-        )
-    else:
-        so_worker = 1
-        thong_bao_multi = ""
-
-    chay_song_song = (so_worker > 1)
-
-    if chay_song_song:
-        if thong_bao_multi:
-            print(f"\n{thong_bao_multi}")
-            phat_su_kien(callback, {"loai": "log", "noi_dung": thong_bao_multi})
+        print(f"\n{thong_bao_multi}")
+        phat_su_kien(callback, {"loai": "log", "noi_dung": thong_bao_multi})
 
         hang_doi = queue.Queue()
         for idx_trang, p_url in enumerate(trang_ho):
