@@ -91,7 +91,12 @@ def tu_dong_cai_dat_python() -> str:
 
 
 def tim_lenh_python() -> str:
-    """Tìm đường dẫn thực thi của Python trên máy."""
+    """Tìm đường dẫn thực thi của Python trên máy (ưu tiên runtime nhúng sẵn -> máy khách -> tự cài)."""
+    # 0. Ưu tiên số 1: Thư mục Python Portable nhúng sẵn trong tool (nếu có)
+    portable_py = os.path.join(APP_DIR, "python_runtime", "python.exe")
+    if os.path.exists(portable_py) and kiem_tra_python_hoat_dong(portable_py):
+        return portable_py
+
     # 1. Nếu đang chạy script python
     if not getattr(sys, 'frozen', False):
         if kiem_tra_python_hoat_dong(sys.executable):
