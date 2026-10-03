@@ -1,9 +1,17 @@
 Set WshShell = CreateObject("WScript.Shell")
-strCurDir = CreateObject("Scripting.FileSystemObject").GetParentFolderName(WScript.ScriptFullName)
+Set fso = CreateObject("Scripting.FileSystemObject")
+strCurDir = fso.GetParentFolderName(WScript.ScriptFullName)
 WshShell.CurrentDirectory = strCurDir
 
-Set fso = CreateObject("Scripting.FileSystemObject")
-strPython = strCurDir & "\python_runtime\python.exe"
+strPython = ""
+If fso.FileExists("C:\Python312\python.exe") Then
+    strPython = "C:\Python312\python.exe"
+ElseIf fso.FileExists(strCurDir & "\python_runtime\python.exe") Then
+    strPython = strCurDir & "\python_runtime\python.exe"
+Else
+    strPython = "python"
+End If
+
 strFlag = strCurDir & "\installed.flag"
 
 If Not fso.FileExists(strFlag) Then
