@@ -25,5 +25,4 @@ WshShell.Environment("PROCESS")("PYTHONPATH") = strCurDir & "\core"
 WshShell.Environment("PROCESS")("FTM_ROOT_DIR") = strCurDir
 
 WshShell.Run """" & strPython & """ """ & strCurDir & "\core\webui.pyc""", 0, False
-WScript.Sleep 3500
-WshShell.Run "http://127.0.0.1:5001"
+' Trinh duyet da duoc webui tu dong mo chinh xac 1 tab duy nhat sau khi server san sang
