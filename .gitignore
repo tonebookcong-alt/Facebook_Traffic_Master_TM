@@ -1,6 +1,5 @@
-# Sensitive session & proxy data
+# Sensitive session data
 cookies.txt
-proxies.txt
 *.env
 .env*
 
