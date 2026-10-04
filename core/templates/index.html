@@ -380,6 +380,17 @@
                     </div>
                   </div>
                 </div>
+                <div class="row g-2 mb-3">
+                  <div class="col-12">
+                    <div class="form-check form-switch p-2 bg-light border rounded">
+                      <input class="form-check-input ms-0 me-2" type="checkbox" id="scrapeBoQuaBaiCu" checked>
+                      <label class="form-check-label small fw-bold" for="scrapeBoQuaBaiCu">
+                        🛡️ Bỏ qua bài đã có trong kho (Chống cào trùng bài cũ)
+                      </label>
+                      <span class="small text-muted ms-2">(Bỏ tích nếu muốn cào lại toàn bộ bài viết trên Fanpage bất chấp bài đã có trong kho)</span>
+                    </div>
+                  </div>
+                </div>
                 <div class="d-flex gap-2">
                   <button id="btnCheckCookie" class="btn btn-outline-secondary" onclick="kiemTraCookie()">
                     <i class="fa-solid fa-cookie me-1"></i> Kiểm tra Cookies (Tùy chọn)
@@ -1516,6 +1527,7 @@
           pages: document.getElementById('scrapeScroll').value,
           delay: document.getElementById('scrapeDelay').value,
           cookies: document.getElementById('scrapeCookies').value,
+          bo_qua_bai_cu: document.getElementById('scrapeBoQuaBaiCu') ? document.getElementById('scrapeBoQuaBaiCu').checked : true,
           ...proxyParams()
         })
       })
@@ -1750,6 +1762,7 @@
           pages: document.getElementById('scrapeScroll').value,
           delay: document.getElementById('scrapeDelay').value,
           cookies: document.getElementById('scrapeCookies').value,
+          bo_qua_bai_cu: document.getElementById('scrapeBoQuaBaiCu') ? document.getElementById('scrapeBoQuaBaiCu').checked : true,
           format_type: '1:1',
           ...proxyParams()
         })
