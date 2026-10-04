@@ -210,10 +210,6 @@
       </div>
 
       <div class="d-flex align-items-center gap-2 flex-wrap">
-        <!-- Badge Bản Quyền -->
-        <span id="licenseBadge" class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1 small" style="cursor:pointer;" onclick="moModalKichHoat(true)" title="Xem thông tin bản quyền">
-          <i class="fa-solid fa-crown text-warning me-1"></i> <span id="licenseBadgeText">Bản quyền</span>
-        </span>
         <span class="text-muted small d-none d-xl-inline"><i class="fa-solid fa-robot text-success"></i> Model: <strong id="headerAiModel">…</strong></span>
 
         <!-- Cụm Xuất & Vá Master Nhanh (Bấm mọi lúc, không sợ đang cào hay chạy AI) -->
@@ -225,9 +221,10 @@
             </button>
             <ul class="dropdown-menu dropdown-menu-end shadow-sm" style="font-size: 0.85rem; min-width: 220px;">
               <li class="dropdown-header text-uppercase fw-bold text-muted small"><i class="fa-solid fa-bolt text-warning me-1"></i> Xuất Vòng Mới</li>
-              <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="xuatMaster(1, 'us')"><i class="fa-solid fa-flag-usa text-danger me-2"></i><b>Xuất Master (US)</b></a></li>
+              <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="xuatMaster(1, 'us')"><i class="fa-solid fa-flag-usa text-danger me-2"></i><b>Xuất Master 1 (US)</b></a></li>
+              <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="xuatMaster(2, 'us')"><i class="fa-solid fa-flag-usa text-primary me-2"></i><b>Xuất Master 2 (US 2)</b></a></li>
               <li><hr class="dropdown-divider my-1"></li>
-              <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="xuatMaster(1, 'global')"><i class="fa-solid fa-earth-americas text-success me-2"></i><b>Xuất Master (GLOBAL)</b></a></li>
+              <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="xuatMaster(1, 'global')"><i class="fa-solid fa-earth-americas text-success me-2"></i><b>Xuất Master GLOBAL</b></a></li>
             </ul>
           </div>
 
@@ -238,9 +235,10 @@
             </button>
             <ul class="dropdown-menu dropdown-menu-end shadow-sm" style="font-size: 0.85rem; min-width: 220px;">
               <li class="dropdown-header text-uppercase fw-bold text-muted small"><i class="fa-solid fa-bandage text-warning me-1"></i> Vá dòng CHỜ BÀI</li>
-              <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="vaMaster(1, 'us')"><i class="fa-solid fa-flag-usa text-danger me-2"></i><b>Vá Master (US)</b></a></li>
+              <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="vaMaster(1, 'us')"><i class="fa-solid fa-flag-usa text-danger me-2"></i><b>Vá Master 1 (US)</b></a></li>
+              <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="vaMaster(2, 'us')"><i class="fa-solid fa-flag-usa text-primary me-2"></i><b>Vá Master 2 (US 2)</b></a></li>
               <li><hr class="dropdown-divider my-1"></li>
-              <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="vaMaster(1, 'global')"><i class="fa-solid fa-earth-americas text-success me-2"></i><b>Vá Master (GLOBAL)</b></a></li>
+              <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="vaMaster(1, 'global')"><i class="fa-solid fa-earth-americas text-success me-2"></i><b>Vá Master GLOBAL</b></a></li>
             </ul>
           </div>
         </div>
@@ -312,7 +310,7 @@
               <div class="card-body">
                 <div class="mb-3">
                   <label class="form-label fw-bold">Danh sách Fanpage nguồn (mỗi dòng 1 trang):</label>
-                  <textarea id="scrapePages" class="form-control" rows="4" placeholder="https://facebook.com/nfl&#10;https://facebook.com/dallascowboys&#10;(Mỗi dòng 1 link fanpage hoặc ID trang)"></textarea>
+                  <textarea id="scrapePages" class="form-control" rows="4" placeholder="wx.phanvanvu&#10;https://facebook.com/nfl"></textarea>
                   <div class="mt-2">
                     <div class="nhom-check-head">
                       <label class="form-label small fw-bold mb-0 text-nowrap">📚 Hoặc tích CHỦ ĐỀ lấy từ kho nguồn:</label>
@@ -332,8 +330,8 @@
                     <label class="form-label small fw-bold mb-0 text-nowrap">🌐 Web đăng bài:</label>
                     <select id="webDangBai" class="form-select form-select-sm" style="max-width:240px">
                       <option value="">— theo vùng —</option>
-                      <option value="us">🇺🇸 US — moneycomehere.cfx.bz</option>
-                      <option value="global">🌍 GLOBAL — moneycomehere.cfx.bz</option>
+                      <option value="us">🇺🇸 US — primevista24.cfx.bz</option>
+                      <option value="global">🌍 GLOBAL — northvision360.cfx.bz</option>
                     </select>
                     <span class="small text-muted">Tự động theo công tắc vùng trên header</span>
                   </div>
@@ -547,18 +545,17 @@
               </select>
               <select id="batchWebDang" class="form-select form-select-sm" style="width: 230px;" title="Web đăng bài báo (bắt buộc)">
                 <option value="">— 🌐 Chọn WEB ĐĂNG BÀI —</option>
-                <option value="us">🇺🇸 US — moneycomehere.cfx.bz</option>
-                <option value="global">🌍 GLOBAL — moneycomehere.cfx.bz</option>
+                <option value="us">🇺🇸 US — primevista24.cfx.bz</option>
+                <option value="global">🌍 GLOBAL — northvision360.cfx.bz</option>
               </select>
-              <div class="input-group input-group-sm" style="width: 140px;" title="Mã nhận diện người đăng (gắn vào tiêu đề bài báo, ví dụ: TH)">
-                <span class="input-group-text bg-white text-muted small fw-bold">Mã:</span>
-                <input type="text" id="quickBatchPrefix" class="form-control fw-bold text-primary" placeholder="vd: TH" onchange="capNhatQuickPrefix(this.value)">
-              </div>
               <button class="btn btn-sm btn-primary" onclick="chayXuLyHangLoat()">
                 <i class="fa-solid fa-bolt me-1"></i> Xử Lý AI Hàng Loạt
               </button>
               <button class="btn btn-sm btn-outline-danger" onclick="xoaBaiDaChon()">
                 <i class="fa-solid fa-trash me-1"></i> Xóa bài đã chọn
+              </button>
+              <button class="btn btn-sm btn-danger ms-2" onclick="xoaToanBoKhoBai()" title="Xóa trắng kho bài và gỡ bỏ hoàn toàn bộ lọc chống trùng với máy cũ">
+                <i class="fa-solid fa-broom me-1"></i> 🧹 Dọn Sạch Kho (Reset Lọc Trùng)
               </button>
             </div>
             <div>
@@ -740,15 +737,11 @@
                 <div class="card-header d-flex justify-content-between align-items-center">
                   <span><i class="fa-solid fa-image me-2"></i> Ảnh Đăng (cắt ở Tab 4)</span>
                   <div class="d-flex gap-1 align-items-center">
-                    <select id="detailWebDang" class="form-select form-select-sm" style="width: 190px;" title="Web đăng bài báo (bắt buộc)">
+                    <select id="detailWebDang" class="form-select form-select-sm" style="width: 210px;" title="Web đăng bài báo (bắt buộc)">
                       <option value="">🌐 Web đăng: chọn...</option>
-                      <option value="us">🇺🇸 US — moneycomehere.cfx.bz</option>
+                      <option value="us">🇺🇸 US — primevista24</option>
                       <option value="global">🌍 GLOBAL — northvision360</option>
                     </select>
-                    <div class="input-group input-group-sm" style="width: 120px;" title="Mã nhận diện (TH, NV01...)">
-                      <span class="input-group-text bg-white text-muted small fw-bold">Mã:</span>
-                      <input type="text" id="detailMaNhanDien" class="form-control fw-bold text-primary" placeholder="TH" onchange="capNhatQuickPrefix(this.value)">
-                    </div>
                     <select id="detailFormatType" class="form-select form-select-sm" style="width: 100px;">
                       <option value="1:1">1:1 Vuông</option>
                       <option value="4:5">4:5 Dọc FB</option>
@@ -978,22 +971,24 @@
                 </button>
                 <ul class="dropdown-menu shadow-sm" style="font-size: 0.85rem; min-width: 230px;">
                   <li class="dropdown-header text-uppercase fw-bold text-muted small"><i class="fa-solid fa-bolt text-warning me-1"></i> Xuất Vòng Mới</li>
-                  <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="xuatMaster(1, 'us')"><i class="fa-solid fa-flag-usa text-danger me-2"></i><b>Xuất Master (US)</b> <span class="text-muted small">(MASTER_DANG_BAI_US.xlsx)</span></a></li>
+                  <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="xuatMaster(1, 'us')"><i class="fa-solid fa-flag-usa text-danger me-2"></i><b>Xuất Master 1 (US)</b> <span class="text-muted small">(danh_sach_uid.xlsx)</span></a></li>
+                  <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="xuatMaster(2, 'us')"><i class="fa-solid fa-flag-usa text-primary me-2"></i><b>Xuất Master 2 (US 2)</b> <span class="text-muted small">(danh_sach_uid_2.xlsx)</span></a></li>
                   <li><hr class="dropdown-divider my-1"></li>
-                  <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="xuatMaster(1, 'global')"><i class="fa-solid fa-earth-americas text-success me-2"></i><b>Xuất Master (GLOBAL)</b> <span class="text-muted small">(MASTER_DANG_BAI_GLOBAL.xlsx)</span></a></li>
+                  <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="xuatMaster(1, 'global')"><i class="fa-solid fa-earth-americas text-success me-2"></i><b>Xuất Master GLOBAL</b> <span class="text-muted small">(MASTER_DANG_BAI_GLOBAL.xlsx)</span></a></li>
                 </ul>
               </div>
 
-              <!-- Dropdown Vá MASTER (Vá Master US & Global) -->
+              <!-- Dropdown Vá MASTER (Vá Master 1, Master 2 & Global) -->
               <div class="dropdown d-inline-block">
                 <button class="btn btn-sm btn-outline-warning dropdown-toggle" type="button" id="btnVaMasterDrop" data-bs-toggle="dropdown" aria-expanded="false">
                   <i class="fa-solid fa-band-aid me-1"></i> Vá dòng CHỜ BÀI
                 </button>
                 <ul class="dropdown-menu shadow-sm" style="font-size: 0.85rem; min-width: 230px;">
                   <li class="dropdown-header text-uppercase fw-bold text-muted small"><i class="fa-solid fa-bandage text-warning me-1"></i> Vá dòng CHỜ BÀI</li>
-                  <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="vaMaster(1, 'us')"><i class="fa-solid fa-flag-usa text-danger me-2"></i><b>Vá Master (US)</b></a></li>
+                  <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="vaMaster(1, 'us')"><i class="fa-solid fa-flag-usa text-danger me-2"></i><b>Vá Master 1 (US)</b> <span class="text-muted small">(Hiện tại)</span></a></li>
+                  <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="vaMaster(2, 'us')"><i class="fa-solid fa-flag-usa text-primary me-2"></i><b>Vá Master 2 (US 2)</b> <span class="text-muted small">(Mới)</span></a></li>
                   <li><hr class="dropdown-divider my-1"></li>
-                  <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="vaMaster(1, 'global')"><i class="fa-solid fa-earth-americas text-success me-2"></i><b>Vá Master (GLOBAL)</b></a></li>
+                  <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="vaMaster(1, 'global')"><i class="fa-solid fa-earth-americas text-success me-2"></i><b>Vá Master GLOBAL</b></a></li>
                 </ul>
               </div>
 
@@ -1042,42 +1037,8 @@
         </div>
       </div>
 
-      <!-- TAB 6: CÀI ĐẶT AI & BẢN QUYỀN -->
+      <!-- TAB 6: CÀI ĐẶT AI -->
       <div class="tab-pane fade" id="tab6">
-        
-        <!-- CARD THÔNG TIN BẢN QUYỀN & MÃ NHẬN DIỆN -->
-        <div class="card mb-3 border-primary border-opacity-25 shadow-sm">
-          <div class="card-header bg-white d-flex justify-content-between align-items-center py-2">
-            <span class="fw-bold text-primary"><i class="fa-solid fa-crown text-warning me-2"></i> Bản Quyền & Mã Nhận Diện Người Đăng</span>
-            <button class="btn btn-sm btn-outline-primary" type="button" onclick="kiemTraBanQuyenUI(true)"><i class="fa-solid fa-rotate me-1"></i> Làm mới</button>
-          </div>
-          <div class="card-body p-3">
-            <div class="row g-3 align-items-center">
-              <div class="col-md-4">
-                <label class="form-label small fw-bold text-muted mb-1"><i class="fa-solid fa-id-badge text-success me-1"></i> Mã nhận diện tiêu đề bài báo:</label>
-                <div class="input-group">
-                  <input type="text" id="cfgMaNhanDien" class="form-control fw-bold text-primary" placeholder="Ví dụ: TH hoặc NV01">
-                  <button class="btn btn-primary" type="button" onclick="luuMaNhanDienRieng()"><i class="fa-solid fa-floppy-disk me-1"></i> Lưu mã</button>
-                </div>
-                <div class="form-text x-small text-muted">Tự động gắn vào đầu tiêu đề bài báo khi đăng web (ví dụ: <code>TH - Title</code>).</div>
-              </div>
-              <div class="col-md-4">
-                <label class="form-label small fw-bold text-muted mb-1"><i class="fa-solid fa-shield-halved text-info me-1"></i> Trạng thái bản quyền:</label>
-                <div id="cfgLicStatusText" class="fw-bold text-success py-1">Đang kiểm tra...</div>
-                <div id="cfgLicPlanText" class="small text-muted">Gói: Đang tải...</div>
-              </div>
-              <div class="col-md-4">
-                <label class="form-label small fw-bold text-muted mb-1"><i class="fa-solid fa-laptop-code text-secondary me-1"></i> Mã máy (Machine ID):</label>
-                <div class="input-group input-group-sm">
-                  <input type="text" id="cfgLicMachineId" class="form-control font-monospace bg-light" readonly>
-                  <button class="btn btn-outline-secondary" type="button" onclick="navigator.clipboard.writeText(document.getElementById('cfgLicMachineId').value).then(() => showToast('📋 Đã copy mã máy!'))"><i class="fa-solid fa-copy"></i></button>
-                </div>
-                <div class="form-text x-small text-muted">Mã phần cứng duy nhất của máy tính này</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
         <div class="card">
           <div class="card-body">
             <h6 class="fw-bold mb-1"><i class="fa-solid fa-gear text-primary me-2"></i> Cấu Hình AI</h6>
@@ -1202,26 +1163,17 @@
                 </button>
               </div>
               <div class="card-body p-3">
-                <div class="row g-2 mb-2">
-                  <div class="col-md-6">
-                    <label class="form-label small fw-bold mb-1">
-                      <i class="fa-solid fa-robot text-primary me-1"></i> Telegram Bot Token:
-                    </label>
-                    <input type="password" id="baiNoTeleToken" class="form-control form-control-sm" placeholder="123456789:ABCdefGhI..." autocomplete="off">
-                    <div class="form-text x-small text-muted">Lấy từ <code>@BotFather</code> trên Telegram</div>
+                <div class="mb-2">
+                  <label class="form-label small fw-bold mb-1">
+                    <i class="fa-brands fa-telegram text-primary me-1"></i> Telegram Target (Chat ID / Group ID):
+                  </label>
+                  <div class="input-group input-group-sm">
+                    <input type="text" id="baiNoTeleTarget" class="form-control" placeholder="-100xxxxxxxxx (Group) hoặc 5566515195">
+                    <button class="btn btn-outline-secondary" type="button" onclick="guiTestTeleBaiNo()" title="Gửi thử tin nhắn test để xác nhận bot hoạt động">
+                      <i class="fa-solid fa-paper-plane me-1"></i> Test
+                    </button>
                   </div>
-                  <div class="col-md-6">
-                    <label class="form-label small fw-bold mb-1">
-                      <i class="fa-brands fa-telegram text-primary me-1"></i> Telegram Target (Chat ID / Group ID):
-                    </label>
-                    <div class="input-group input-group-sm">
-                      <input type="text" id="baiNoTeleTarget" class="form-control" placeholder="-100xxxxxxxxx hoặc ID cá nhân">
-                      <button class="btn btn-outline-secondary" type="button" onclick="guiTestTeleBaiNo()" title="Gửi thử tin nhắn test để xác nhận bot hoạt động">
-                        <i class="fa-solid fa-paper-plane me-1"></i> Test
-                      </button>
-                    </div>
-                    <div class="form-text x-small text-muted">Group Telegram bắt đầu bằng dấu trừ <code>-</code></div>
-                  </div>
+                  <div class="form-text x-small text-muted">Lưu ý: Group Telegram luôn bắt đầu bằng dấu trừ <code>-</code> (Ví dụ nhóm của bạn: <code>-5314274362</code>).</div>
                 </div>
 
                 <div class="row g-2 mb-2">
@@ -1627,7 +1579,7 @@
       document.getElementById('fullAutoTextarea').disabled = (v === 'kho');
       document.getElementById('fullAutoTextarea').placeholder = (v === 'kho')
         ? '(Mặc định lấy từ du_lieu_traffic/source_config.json — để trống textarea cũng được)'
-        : 'Mỗi dòng 1 trang (vd: https://facebook.com/nfl)';
+        : 'Mỗi dòng 1 trang (vd: wx.phanvanvu)';
       if (typeof capNhatSoLuongGoiY === 'function') capNhatSoLuongGoiY();
     }
     // Dựng bộ tham số FULL AUTO từ modal (dùng chung: chạy ngay + lưu lịch hẹn)
@@ -1671,133 +1623,13 @@
                   : ' → KHÔNG giới hạn: xử lý toàn bộ bài mới.');
     }
 
-    let _cachedFullAutoBody = null;
-
     function fullAutoXacNhan() {
+      const btn = document.getElementById('btnFullAuto');
       const body = _fullAutoThamSo();
       if (!body.web) return showToast('🌐 Chọn WEB ĐĂNG BÀI (US hoặc GLOBAL) trước khi chạy!');
-
-      _cachedFullAutoBody = body;
-
-      // Ẩn modal thiết lập tham số Full Auto
-      const m1 = bootstrap.Modal.getInstance(document.getElementById('fullAutoModal'));
-      if (m1) m1.hide();
-
-      // Mở modal xác nhận chủ đề
-      const m2 = new bootstrap.Modal(document.getElementById('modalXacNhanFullAuto'));
-      m2.show();
-
-      // Điền thông tin tóm tắt
-      const webTen = body.web.toUpperCase() === 'US' ? '🇺🇸 US (moneycomehere.cfx.bz)' : '🌍 GLOBAL (moneycomehere.cfx.bz)';
-      const loaiTen = {anh:'🖼️ Cắt Ảnh', reel:'🎬 Chỉ Reel', ca_hai:'📦 Cả 2 (Ảnh+Reel)'}[body.loai_xuat] || 'Cắt Ảnh';
-      const maNhanDien = (document.getElementById('quickBatchPrefix') ? document.getElementById('quickBatchPrefix').value.trim() : '') || 'TH';
-
-      document.getElementById('xnfWeb').innerText = webTen;
-      document.getElementById('xnfMaNhanDien').innerText = maNhanDien;
-      document.getElementById('xnfLoaiXuat').innerText = loaiTen;
-
-      // Render danh sách chủ đề cho phép sửa trực tiếp trong modal xác nhận
-      const box = document.getElementById('xnfNhomList');
-      if (!_DS_NHOM || !_DS_NHOM.length) {
-        box.innerHTML = '<span class="small text-muted">Kho nguồn chưa có chủ đề nào.</span>';
-      } else {
-        const daChon = new Set(layNhomDaChonArr('full'));
-        box.innerHTML = _DS_NHOM.map((n, i) => {
-          const id = 'xnfNhom_' + i;
-          const hl = n.hop_le || 0;
-          const nh = `${esc(n.key)}`;
-          const isChecked = daChon.has(n.key);
-          return `<label class="nhom-chip ${isChecked ? 'active' : ''} ${hl ? '' : 'khong-nguon'}" style="margin: 3px;" title="${esc(n.vung || '')} — ${hl} nguồn">
-            <input class="form-check-input" type="checkbox" id="${id}" data-key="${nh}" ${isChecked ? 'checked' : ''} onchange="xnfOnChonNhom(this)">
-            <span>${nh}</span><span class="nhom-so">${hl || n.so_nguon}</span>
-          </label>`;
-        }).join('');
-      }
-
-      xnfCapNhatUI();
-    }
-
-    function xnfOnChonNhom(el) {
-      el.closest('.nhom-chip')?.classList.toggle('active', el.checked);
-      xnfCapNhatUI();
-    }
-
-    function xnfChonTatCa() {
-      document.querySelectorAll('#xnfNhomList input[type="checkbox"]').forEach(cb => {
-        if (!cb.closest('.nhom-chip').classList.contains('khong-nguon')) {
-          cb.checked = true;
-          cb.closest('.nhom-chip').classList.add('active');
-        }
-      });
-      xnfCapNhatUI();
-    }
-
-    function xnfBoChon() {
-      document.querySelectorAll('#xnfNhomList input[type="checkbox"]').forEach(cb => {
-        cb.checked = false;
-        cb.closest('.nhom-chip').classList.remove('active');
-      });
-      xnfCapNhatUI();
-    }
-
-    function xnfLayNhomDaChonArr() {
-      return [...document.querySelectorAll('#xnfNhomList input[type="checkbox"]:checked')].map(cb => cb.dataset.key);
-    }
-
-    function xnfCapNhatUI() {
-      const c = xnfLayNhomDaChonArr();
-      const alertBox = document.getElementById('xnfAlertBox');
-      const hintText = document.getElementById('xnfHintText');
-      const tongKho = (_DS_NHOM || []).reduce((s, n) => s + (n.hop_le || 0), 0);
-
-      if (c.length === 0) {
-        alertBox.className = 'alert alert-danger py-2 small mb-3';
-        alertBox.innerHTML = `
-          <i class="fa-solid fa-triangle-exclamation text-danger me-1"></i>
-          <b>CẢNH BÁO: BẠN CHƯA TÍCH CHỦ ĐỀ NÀO!</b><br>
-          Nếu chạy tiếp, hệ thống sẽ cào <b>TOÀN BỘ kho nguồn (${tongKho} trang)</b> và đăng tất cả chủ đề lên web. Hãy tích chọn đúng chủ đề của bạn ở danh sách dưới!
-        `;
-        hintText.innerText = 'Chưa chọn chủ đề nào.';
-        hintText.className = 'form-text x-small text-danger mt-1';
-      } else {
-        alertBox.className = 'alert alert-success py-2 small mb-3';
-        alertBox.innerHTML = `
-          <i class="fa-solid fa-circle-check text-success me-1"></i>
-          <b>Xác nhận chủ đề:</b> Bạn đã chọn <b>${c.length} chủ đề</b>: <span class="badge bg-light text-primary border">${c.join(', ')}</span>.<br>
-          Hệ thống sẽ <b>CHỈ CÀO VÀ ĐĂNG BÀI THUỘC ĐÚNG CÁC CHỦ ĐỀ NÀY</b>.
-        `;
-        hintText.innerText = `Đã chọn ${c.length} chủ đề. Bạn có thể tích thêm hoặc bỏ bớt bất cứ lúc nào.`;
-        hintText.className = 'form-text x-small text-success mt-1';
-      }
-    }
-
-    function xnfThucHienChayNgay() {
-      const modalEl = document.getElementById('modalXacNhanFullAuto');
-      const inst = bootstrap.Modal.getInstance(modalEl);
-      if (inst) inst.hide();
-
-      // Đồng bộ các chủ đề đã chọn ngược lại vào bộ nhớ và form chính
-      const c = xnfLayNhomDaChonArr();
-      try {
-        localStorage.setItem('nhomChon_full', JSON.stringify(c));
-      } catch (e) {}
-      
-      // Đồng bộ lại các checkbox ở modal Full Auto cũ
-      document.querySelectorAll(`input[data-prefix="full"]`).forEach(cb => {
-        const k = cb.dataset.key;
-        const checked = c.includes(k);
-        cb.checked = checked;
-        cb.closest('.nhom-chip')?.classList.toggle('active', checked);
-      });
-      capNhatHintNhom('full');
-
-      const btn = document.getElementById('btnFullAuto');
-      const body = _cachedFullAutoBody || _fullAutoThamSo();
-      body.nhom_key = c.join(';'); // cập nhật chuỗi nhóm đã chọn
-
       const v = document.querySelector('input[name="fullAutoNguon"]:checked').value;
       const soTrang = (body.nguon || '').split('\n').filter(x => x.trim()).length;
-
+      bootstrap.Modal.getInstance(document.getElementById('fullAutoModal')).hide();
       window.fullAutoDangChay = true;
       btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin me-1"></i> Đang chạy...';
       document.getElementById('btnStartScrape').classList.add('d-none');
@@ -1808,21 +1640,9 @@
       const ten = {anh:'Cắt Ảnh', reel:'Reel', ca_hai:'Ảnh+Reel'}[body.loai_xuat] || 'Cắt Ảnh';
       const tenWeb = {us:'US', global:'GLOBAL'}[body.web] || body.web;
       _fullAutoLogClient('Bạn chọn: ' + (v==='kho' ? ('Kho nguồn' + (body.nhom_key ? ' — chủ đề: ' + body.nhom_key.split(';').join(', ') : ' (tất cả chủ đề)')) : 'Textarea ' + soTrang + ' trang') + ' | Web: ' + tenWeb + ' | Xuất: ' + ten + ' | ' + (parseInt(body.gioi_han) > 0 ? ('giới hạn ' + body.gioi_han + ' bài') : 'không giới hạn số bài') + ' | per_page=' + body.per_page + ' x pages=' + body.pages);
-      
-      fetch('/api/chay_full_auto', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(body)
-      })
-      .then(r => r.json()).then(d => {
-        if(!d.ok){
-          showToast('❌ Lỗi: ' + d.loi);
-          window.fullAutoDangChay = false;
-          btn.disabled = false;
-          btn.innerHTML = '<i class="fa-solid fa-robot me-1"></i> Chạy Full Tự Động';
-          dungCaoUI();
-        }
-      });
+      fetch('/api/chay_full_auto', { method: 'POST', headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(body) })
+      .then(r => r.json()).then(d => { if(!d.ok){ showToast('❌ Lỗi: ' + d.loi); window.fullAutoDangChay = false; btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-robot me-1"></i> Chạy Full Tự Động'; dungCaoUI(); } });
     }
 
     // ---------- HẸN GIỜ FULL AUTO ----------
@@ -2217,7 +2037,23 @@
       });
     }
 
-    let danhSachIdsDangXuLy = [];
+    function xoaToanBoKhoBai() {
+      if (!confirm('⚠️ BẠN CÓ CHẮC CHẮN MUỐN DỌN SẠCH TOÀN BỘ KHO BÀI?\n\nThao tác này sẽ:\n1. Xóa sạch mọi bài cũ trong kho về 0\n2. Xóa sạch toàn bộ bộ lọc chống trùng với máy cũ\n-> Giúp tool cào được tất cả các bài mới toanh trên Facebook!')) return;
+      fetch('/api/pool/xoa_toan_bo', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({})
+      })
+      .then(r => r.json())
+      .then(d => {
+        if (d.ok) {
+          showToast('🧹 ĐÃ DỌN SẠCH KHO BÀI & RESET BỘ LỌC TRÙNG THÀNH CÔNG!');
+          taiKhoBai(true);
+        } else {
+          showToast(d.loi || 'Thao tác thất bại');
+        }
+      });
+    }
 
     function chayXuLyHangLoat() {
       const cbs = document.querySelectorAll('.row-checkbox:checked');
@@ -2227,117 +2063,6 @@
       const fmt = document.getElementById('batchFormat').value;
       const webDang = document.getElementById('batchWebDang').value;
       if (!webDang) return showToast('🌐 Chọn WEB ĐĂNG BÀI (US hoặc GLOBAL) trước khi chạy hàng loạt!');
-
-      const maNhanDien = (document.getElementById('quickBatchPrefix') ? document.getElementById('quickBatchPrefix').value.trim() : '') || 'TH';
-      danhSachIdsDangXuLy = ids;
-
-      // Phân tích chủ đề của các bài đã chọn từ poolDataCache
-      const chuDeMap = {};
-      ids.forEach(cid => {
-        const item = poolDataCache.find(x => (x['Content ID'] || '') === cid);
-        const cd = (item ? (item['Nhân vật/chủ đề'] || item.KEY || 'Chung') : 'Chung').trim();
-        if (!chuDeMap[cd]) chuDeMap[cd] = [];
-        chuDeMap[cd].push(cid);
-      });
-
-      const danhSachChuDe = Object.keys(chuDeMap);
-      const bodyEl = document.getElementById('modalXacNhanBody');
-      const webTen = webDang.toUpperCase() === 'US' ? '🇺🇸 US (moneycomehere.cfx.bz)' : '🌍 GLOBAL (moneycomehere.cfx.bz)';
-
-      let htmlContent = `
-        <div class="mb-3">
-          <div class="d-flex justify-content-between align-items-center mb-2">
-            <span class="small text-muted fw-bold">Tổng số bài được chọn:</span>
-            <span class="badge bg-primary fs-6 px-3 py-1">${ids.length} bài</span>
-          </div>
-          <div class="d-flex justify-content-between align-items-center mb-2">
-            <span class="small text-muted fw-bold">Website đăng bài:</span>
-            <span class="badge bg-dark px-2 py-1">${webTen}</span>
-          </div>
-          <div class="d-flex justify-content-between align-items-center mb-2">
-            <span class="small text-muted fw-bold">Mã nhận diện tiêu đề:</span>
-            <span class="badge bg-success px-2 py-1">${maNhanDien} (ví dụ: ${maNhanDien} - Tiêu đề bài báo)</span>
-          </div>
-        </div>
-      `;
-
-      if (danhSachChuDe.length === 1) {
-        // Đồng nhất 1 chủ đề duy nhất -> An toàn 100%
-        htmlContent += `
-          <div class="alert alert-success py-2 small mb-0">
-            <i class="fa-solid fa-circle-check text-success me-1"></i>
-            Tất cả <b>${ids.length} bài</b> đều thuộc cùng một chủ đề: <b>${danhSachChuDe[0]}</b>.
-          </div>
-        `;
-      } else {
-        // Có từ 2 chủ đề trở lên -> BẬT CẢNH BÁO CHỐNG NHẦM
-        htmlContent += `
-          <div class="alert alert-warning py-2 small mb-3">
-            <i class="fa-solid fa-triangle-exclamation me-1"></i>
-            <b>CHÚ Ý:</b> Bạn đang chọn bài thuộc <b>${danhSachChuDe.length} chủ đề khác nhau</b>!
-            Nếu bạn chỉ muốn đăng chủ đề của mình, hãy bấm nút <b>[Chỉ giữ chủ đề này]</b> ở dưới.
-          </div>
-          <label class="form-label small fw-bold text-muted mb-1">Danh sách chủ đề có trong đợt đăng này:</label>
-          <div class="list-group mb-2" style="max-height: 200px; overflow-y: auto;">
-        `;
-        danhSachChuDe.forEach(cd => {
-          const soBai = chuDeMap[cd].length;
-          htmlContent += `
-            <div class="list-group-item d-flex justify-content-between align-items-center py-2 px-3">
-              <div>
-                <strong class="text-primary">${cd}</strong>
-                <span class="badge bg-secondary ms-2">${soBai} bài</span>
-              </div>
-              <button class="btn btn-xs btn-outline-primary py-1 px-2" type="button" onclick="locChiGiuChuDeTrongModal('${cd.replace(/'/g, "\\'")}')">
-                <i class="fa-solid fa-filter me-1"></i> Chỉ giữ chủ đề này
-              </button>
-            </div>
-          `;
-        });
-        htmlContent += `</div>`;
-      }
-
-      bodyEl.innerHTML = htmlContent;
-      const modal = new bootstrap.Modal(document.getElementById('modalXacNhanXuLy'));
-      modal.show();
-    }
-
-    function locChiGiuChuDeTrongModal(chuDeChon) {
-      // Bỏ chọn tất cả các bài khác chủ đề này
-      const cbs = document.querySelectorAll('.row-checkbox');
-      let count = 0;
-      cbs.forEach(cb => {
-        const item = poolDataCache.find(x => (x['Content ID'] || '') === cb.value);
-        const cd = (item ? (item['Nhân vật/chủ đề'] || item.KEY || 'Chung') : 'Chung').trim();
-        if (cd === chuDeChon) {
-          cb.checked = true;
-          count++;
-        } else {
-          cb.checked = false;
-        }
-      });
-      updateSelectedCount();
-      showToast(`🎯 Đã lọc chỉ giữ ${count} bài thuộc chủ đề: ${chuDeChon}`);
-      // Đóng modal cũ và mở lại modal mới đã cập nhật
-      const modalEl = document.getElementById('modalXacNhanXuLy');
-      const inst = bootstrap.Modal.getInstance(modalEl);
-      if (inst) inst.hide();
-      setTimeout(() => {
-        chayXuLyHangLoat();
-      }, 300);
-    }
-
-    function thucHienGuiXuLyHangLoat() {
-      const modalEl = document.getElementById('modalXacNhanXuLy');
-      const inst = bootstrap.Modal.getInstance(modalEl);
-      if (inst) inst.hide();
-
-      const cbs = document.querySelectorAll('.row-checkbox:checked');
-      const ids = Array.from(cbs).map(cb => cb.value);
-      if (ids.length === 0) return showToast('Không có bài nào được chọn!');
-
-      const fmt = document.getElementById('batchFormat').value;
-      const webDang = document.getElementById('batchWebDang').value;
       const box = document.getElementById('batchProgressBox');
       box.classList.remove('d-none');
 
@@ -3876,7 +3601,7 @@
     // =====================================================================
     let VUNG = 'us';
     const TEN_VUNG_UI = {us: '🇺🇸 US', global: '🌍 GLOBAL'};
-    const WEB_CUA_VUNG = {us: 'moneycomehere.cfx.bz', global: 'moneycomehere.cfx.bz'};
+    const WEB_CUA_VUNG = {us: 'primevista24.cfx.bz', global: 'northvision360.cfx.bz'};
 
     function khoaWebTheoVung() {
       // 4 ô "Web đăng bài" giờ KHÔNG chọn tay nữa — luôn = vùng đang bật.
@@ -4024,8 +3749,8 @@
             <div class="d-flex align-items-center gap-2">
               <select id="fullAutoWeb" class="form-select form-select-sm" style="max-width:280px">
                 <option value="">— BẮT BUỘC chọn —</option>
-                <option value="us">🇺🇸 US — moneycomehere.cfx.bz</option>
-                <option value="global">🌍 GLOBAL — moneycomehere.cfx.bz</option>
+                <option value="us">🇺🇸 US — primevista24.cfx.bz</option>
+                <option value="global">🌍 GLOBAL — northvision360.cfx.bz</option>
               </select>
               <span class="small text-muted">Bài báo sẽ đăng lên web này</span>
             </div>
@@ -4069,88 +3794,6 @@
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
           <button type="button" class="btn btn-success" onclick="fullAutoXacNhan()">
             <i class="fa-solid fa-play me-1"></i> Bắt đầu
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAL XÁC NHẬN XỬ LÝ HÀNG LOẠT & CHỐNG ĐĂNG NHẦM CHỦ ĐỀ -->
-  <div class="modal fade" id="modalXacNhanXuLy" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content shadow-lg border-0 rounded-4 overflow-hidden">
-        <div class="modal-header py-3 bg-light border-bottom">
-          <h6 class="modal-title fw-bold text-dark mb-0">
-            <i class="fa-solid fa-shield-halved text-primary me-2"></i> Xác Nhận Xử Lý & Đăng Bài Báo
-          </h6>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body p-4" id="modalXacNhanBody">
-          <!-- Render động -->
-        </div>
-        <div class="modal-footer bg-light py-2">
-          <button type="button" class="btn btn-sm btn-outline-secondary px-3" data-bs-dismiss="modal">Hủy bỏ</button>
-          <button type="button" class="btn btn-sm btn-success fw-bold px-4 shadow-sm" id="btnXacNhanBatDau" onclick="thucHienGuiXuLyHangLoat()">
-            <i class="fa-solid fa-bolt me-1"></i> Bắt Đầu Xử Lý Ngay
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAL XÁC NHẬN CHỦ ĐỀ & CHO PHÉP SỬA TRƯỚC KHI CHẠY FULL AUTO -->
-  <div class="modal fade" id="modalXacNhanFullAuto" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-      <div class="modal-content shadow-lg border-0 rounded-4 overflow-hidden">
-        <div class="modal-header py-3 bg-light border-bottom">
-          <h6 class="modal-title fw-bold text-dark mb-0">
-            <i class="fa-solid fa-shield-halved text-success me-2"></i> Xác Nhận Chủ Đề Chạy Full Tự Động
-          </h6>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body p-4">
-          <!-- Thông tin tóm tắt -->
-          <div class="row g-2 mb-3 bg-light p-3 rounded-3 border">
-            <div class="col-md-4">
-              <span class="small text-muted d-block fw-bold">🌐 Website đăng:</span>
-              <span id="xnfWeb" class="badge bg-dark px-2 py-1">US</span>
-            </div>
-            <div class="col-md-4">
-              <span class="small text-muted d-block fw-bold">🏷️ Mã nhận diện bài báo:</span>
-              <span id="xnfMaNhanDien" class="badge bg-primary px-2 py-1">TH</span>
-            </div>
-            <div class="col-md-4">
-              <span class="small text-muted d-block fw-bold">📦 Loại xuất bản:</span>
-              <span id="xnfLoaiXuat" class="badge bg-info text-dark px-2 py-1">Ảnh</span>
-            </div>
-          </div>
-
-          <!-- Hộp cảnh báo / trạng thái chủ đề -->
-          <div id="xnfAlertBox" class="alert py-2 small mb-3"></div>
-
-          <!-- Danh sách chủ đề cho phép sửa trực tiếp -->
-          <div class="mb-2">
-            <div class="d-flex justify-content-between align-items-center mb-1">
-              <label class="form-label small fw-bold mb-0">
-                <i class="fa-solid fa-list-check text-primary me-1"></i> Tích chọn đúng Chủ Đề của bạn (có thể sửa trực tiếp ngay tại đây):
-              </label>
-              <div class="d-flex gap-1">
-                <button type="button" class="btn btn-xs btn-outline-secondary py-0 px-2" onclick="xnfChonTatCa()">Chọn tất cả</button>
-                <button type="button" class="btn btn-xs btn-outline-secondary py-0 px-2" onclick="xnfBoChon()">Bỏ chọn</button>
-              </div>
-            </div>
-            <div class="nhom-check-list p-2 border rounded bg-white" id="xnfNhomList" style="max-height: 220px; overflow-y: auto;">
-              <!-- Render động các chip chủ đề có checkbox -->
-            </div>
-            <div class="form-text x-small text-muted mt-1" id="xnfHintText"></div>
-          </div>
-        </div>
-        <div class="modal-footer bg-light py-2">
-          <button type="button" class="btn btn-sm btn-outline-secondary px-3" data-bs-dismiss="modal">
-            <i class="fa-solid fa-arrow-left me-1"></i> Quay lại
-          </button>
-          <button type="button" class="btn btn-sm btn-success fw-bold px-4 shadow-sm" id="btnXnfBatDau" onclick="xnfThucHienChayNgay()">
-            <i class="fa-solid fa-rocket me-1"></i> Xác Nhận & Chạy Full Tự Động
           </button>
         </div>
       </div>
@@ -4515,7 +4158,6 @@
         .then(r => r.json())
         .then(cfg => {
           if (!cfg) return;
-          if (cfg.telegram_bot_token !== undefined && document.getElementById('baiNoTeleToken')) document.getElementById('baiNoTeleToken').value = cfg.telegram_bot_token || '';
           if (cfg.telegram_target !== undefined) document.getElementById('baiNoTeleTarget').value = cfg.telegram_target || '';
           if (cfg.nguong_view !== undefined) document.getElementById('baiNoNguongView').value = cfg.nguong_view || 1000;
           if (cfg.so_bai_quet !== undefined) document.getElementById('baiNoSoBai').value = cfg.so_bai_quet || 6;
@@ -4584,7 +4226,6 @@
 
       allBaiNoProfilesCache = dsProfile;
 
-      let teleToken = (document.getElementById('baiNoTeleToken') ? document.getElementById('baiNoTeleToken').value.trim() : '');
       let teleTarget = document.getElementById('baiNoTeleTarget').value.trim();
       if (teleTarget === '5314274362') {
         teleTarget = '-5314274362';
@@ -4592,7 +4233,6 @@
       }
       const toggles = layTrangThaiToggleMaster();
       const payload = {
-        telegram_bot_token: teleToken,
         telegram_target: teleTarget,
         nguong_view: parseInt(document.getElementById('baiNoNguongView').value || 1000),
         nguong_like: 10,
@@ -4859,19 +4499,17 @@
     }
 
     function guiTestTeleBaiNo() {
-      let botToken = (document.getElementById('baiNoTeleToken') ? document.getElementById('baiNoTeleToken').value.trim() : '');
       let target = document.getElementById('baiNoTeleTarget').value.trim();
-      if (!botToken) return showToast('Vui lòng nhập Telegram Bot Token trước!');
       if (!target) return showToast('Vui lòng nhập Telegram Target (Chat ID / Group ID) trước!');
       if (target === '5314274362') {
         target = '-5314274362';
         document.getElementById('baiNoTeleTarget').value = target;
       }
-      showToast('Đang gửi tin nhắn test qua Telegram Bot API...');
+      showToast('Đang gửi tin nhắn test qua OpenClaw...');
       fetch('/api/bai_no/gui_test', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({bot_token: botToken, target: target})
+        body: JSON.stringify({target: target})
       })
       .then(r => r.json())
       .then(res => {
@@ -4906,221 +4544,6 @@
     function napProfileTuMaster() {
       napProfileTu3Master();
     }
-
-    // ========================================================
-    // QUẢN LÝ BẢN QUYỀN & MÃ NHẬN DIỆN TIÊU ĐỀ BÀI BÁO
-    // ========================================================
-    let thongTinBanQuyenHienTai = null;
-
-    function copyActMachineId() {
-      const mid = document.getElementById('actMachineId').value;
-      if (!mid || mid === 'Đang lấy mã máy...') return;
-      navigator.clipboard.writeText(mid).then(() => {
-        showToast('📋 Đã sao chép Mã Máy! Hãy gửi mã này cho Admin để nhận License Key.');
-      });
-    }
-
-    function moModalKichHoat(chiXem) {
-      const overlay = document.getElementById('activationOverlay');
-      if (!overlay) return;
-      overlay.style.display = 'block';
-      if (chiXem) {
-        document.getElementById('actNutDong').classList.remove('d-none');
-      } else {
-        document.getElementById('actNutDong').classList.add('d-none');
-      }
-    }
-
-    function dongModalKichHoat() {
-      document.getElementById('activationOverlay').style.display = 'none';
-    }
-
-    function kiemTraBanQuyenUI(force) {
-      fetch('/api/license/trang_thai' + (force ? '?force=1' : ''))
-        .then(r => r.json())
-        .then(d => {
-          thongTinBanQuyenHienTai = d;
-          // Điền mã máy vào các ô
-          if (document.getElementById('actMachineId')) document.getElementById('actMachineId').value = d.machine_id || '';
-          if (document.getElementById('cfgLicMachineId')) document.getElementById('cfgLicMachineId').value = d.machine_id || '';
-
-          // Điền mã nhận diện
-          const ma = d.ma_nhan_dien || 'TH';
-          if (document.getElementById('actMaNhanDien') && !document.getElementById('actMaNhanDien').value) {
-            document.getElementById('actMaNhanDien').value = ma;
-          }
-          if (document.getElementById('cfgMaNhanDien')) document.getElementById('cfgMaNhanDien').value = ma;
-          if (document.getElementById('quickBatchPrefix')) document.getElementById('quickBatchPrefix').value = ma;
-          if (document.getElementById('detailMaNhanDien')) document.getElementById('detailMaNhanDien').value = ma;
-
-          if (d.valid) {
-            // Đã có bản quyền hợp lệ -> Ẩn màn hình khóa
-            document.getElementById('activationOverlay').style.display = 'none';
-            document.getElementById('licenseBadgeText').innerText = 'VIP: ' + (d.client_name || 'Đã kích hoạt');
-            document.getElementById('licenseBadge').className = 'badge bg-success text-white px-2 py-1 small shadow-sm';
-            
-            if (document.getElementById('cfgLicStatusText')) {
-              document.getElementById('cfgLicStatusText').innerHTML = `<span class="badge bg-success"><i class="fa-solid fa-check-circle me-1"></i> ${d.message || 'Bản quyền hợp lệ'}</span>`;
-            }
-            if (document.getElementById('cfgLicPlanText')) {
-              const exp = d.expires_at ? new Date(d.expires_at).toLocaleDateString('vi-VN') : 'Vĩnh viễn';
-              document.getElementById('cfgLicPlanText').innerHTML = `Khách hàng: <b>${d.client_name || 'VIP'}</b> | Hạn dùng: <b>${exp}</b>`;
-            }
-          } else {
-            // Chưa kích hoạt bản quyền -> MỞ MÀN HÌNH KHÓA BẮT BUỘC
-            moModalKichHoat(false);
-            document.getElementById('licenseBadgeText').innerText = 'Chưa kích hoạt';
-            document.getElementById('licenseBadge').className = 'badge bg-danger text-white px-2 py-1 small shadow-sm';
-            if (document.getElementById('cfgLicStatusText')) {
-              document.getElementById('cfgLicStatusText').innerHTML = `<span class="badge bg-danger"><i class="fa-solid fa-triangle-exclamation me-1"></i> ${d.message}</span>`;
-            }
-            if (document.getElementById('cfgLicPlanText')) {
-              document.getElementById('cfgLicPlanText').innerText = 'Vui lòng kích hoạt bản quyền';
-            }
-            if (d.message) {
-              document.getElementById('actKetQua').innerHTML = `<div class="alert alert-warning py-2 small mb-0"><i class="fa-solid fa-circle-exclamation me-1"></i> ${d.message}</div>`;
-            }
-          }
-        })
-        .catch(e => {
-          console.error('Lỗi kiểm tra license:', e);
-        });
-    }
-
-    function thucHienKichHoat() {
-      const key = (document.getElementById('actLicenseKey').value || '').trim();
-      const ma = (document.getElementById('actMaNhanDien').value || '').trim();
-      const btn = document.getElementById('btnActKichHoat');
-      const box = document.getElementById('actKetQua');
-
-      if (!key) return showToast('Vui lòng nhập License Key!');
-      if (!ma) return showToast('Vui lòng nhập Mã nhận diện (ví dụ: TH)!');
-
-      btn.disabled = true;
-      box.innerHTML = '<div class="alert alert-info py-2 small mb-0"><i class="fa-solid fa-spinner fa-spin me-1"></i> Đang xác thực với máy chủ Supabase...</div>';
-
-      fetch('/api/license/kich_hoat', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({license_key: key, ma_nhan_dien: ma})
-      })
-      .then(r => r.json())
-      .then(res => {
-        if (res.ok) {
-          box.innerHTML = `<div class="alert alert-success py-2 small mb-0">🎉 ${res.message} Chào mừng <b>${res.client_name || 'Quý khách'}</b>!</div>`;
-          showToast('🎉 Kích hoạt bản quyền thành công!');
-          setTimeout(() => {
-            kiemTraBanQuyenUI(true);
-          }, 1200);
-        } else {
-          box.innerHTML = `<div class="alert alert-danger py-2 small mb-0"><i class="fa-solid fa-circle-xmark me-1"></i> ${res.message}</div>`;
-          showToast('❌ ' + res.message);
-        }
-      })
-      .catch(e => {
-        box.innerHTML = `<div class="alert alert-danger py-2 small mb-0">❌ Lỗi kết nối: ${e}</div>`;
-      })
-      .finally(() => {
-        btn.disabled = false;
-      });
-    }
-
-    function luuMaNhanDienRieng() {
-      const ma = (document.getElementById('cfgMaNhanDien').value || '').trim();
-      if (!ma) return showToast('Vui lòng nhập mã nhận diện (ví dụ: TH)');
-      fetch('/api/license/doi_ma_nhan_dien', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ma_nhan_dien: ma})
-      })
-      .then(r => r.json())
-      .then(res => {
-        if (res.ok) {
-          showToast('✅ Đã lưu mã nhận diện: ' + ma);
-          if (document.getElementById('quickBatchPrefix')) document.getElementById('quickBatchPrefix').value = ma;
-          if (document.getElementById('detailMaNhanDien')) document.getElementById('detailMaNhanDien').value = ma;
-          if (document.getElementById('actMaNhanDien')) document.getElementById('actMaNhanDien').value = ma;
-        } else {
-          showToast('❌ ' + res.message);
-        }
-      });
-    }
-
-    function capNhatQuickPrefix(val) {
-      val = (val || '').trim();
-      if (!val) return;
-      if (document.getElementById('cfgMaNhanDien')) document.getElementById('cfgMaNhanDien').value = val;
-      if (document.getElementById('quickBatchPrefix')) document.getElementById('quickBatchPrefix').value = val;
-      if (document.getElementById('detailMaNhanDien')) document.getElementById('detailMaNhanDien').value = val;
-      fetch('/api/license/doi_ma_nhan_dien', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ma_nhan_dien: val})
-      }).then(() => showToast('Đã áp dụng mã: ' + val));
-    }
-
-    // Tự động kiểm tra bản quyền khi mở web
-    document.addEventListener('DOMContentLoaded', () => {
-      kiemTraBanQuyenUI(false);
-    });
   </script>
-
-  <!-- ======================================================== -->
-  <!-- OVERLAY KÍCH HOẠT BẢN QUYỀN TOÀN DIỆN (CHỐNG BỎ QUA) -->
-  <!-- ======================================================== -->
-  <div id="activationOverlay" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(15,23,42,0.94); backdrop-filter:blur(10px); z-index:999999; overflow-y:auto;">
-    <div class="d-flex align-items-center justify-content-center min-vh-100 p-3">
-      <div class="card shadow-lg border-0" style="max-width: 520px; width: 100%; border-radius: 16px; overflow: hidden;">
-        <div class="card-header text-white text-center py-4 position-relative" style="background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);">
-          <button id="actNutDong" type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3 d-none" onclick="dongModalKichHoat()"></button>
-          <div class="d-inline-flex p-3 rounded-circle bg-white bg-opacity-10 mb-2">
-            <i class="fa-solid fa-crown text-warning fs-1"></i>
-          </div>
-          <h4 class="fw-bold mb-1">FACEBOOK TRAFFIC MASTER</h4>
-          <div class="small text-white-50">Kích Hoạt Bản Quyền Phần Mềm Thương Mại</div>
-        </div>
-        <div class="card-body p-4">
-          <div class="alert alert-info py-2 small mb-3">
-            <i class="fa-solid fa-shield-halved me-1"></i> Bản quyền khóa theo phần cứng máy tính này. Kích hoạt 1 lần, sử dụng vĩnh viễn trên máy.
-          </div>
-
-          <!-- Mã Máy -->
-          <div class="mb-3">
-            <label class="form-label small fw-bold text-muted mb-1"><i class="fa-solid fa-laptop-code me-1"></i> MÃ MÁY TÍNH CỦA BẠN (MACHINE ID):</label>
-            <div class="input-group">
-              <input type="text" id="actMachineId" class="form-control font-monospace fw-bold bg-light" readonly value="Đang lấy mã máy...">
-              <button class="btn btn-outline-primary" type="button" onclick="copyActMachineId()" title="Sao chép mã máy để gửi Admin">
-                <i class="fa-solid fa-copy me-1"></i> Copy
-              </button>
-            </div>
-            <div class="form-text x-small text-muted">Gửi mã này cho Admin nếu bạn cần cấp License Key.</div>
-          </div>
-
-          <!-- License Key -->
-          <div class="mb-3">
-            <label class="form-label small fw-bold text-muted mb-1"><i class="fa-solid fa-key text-warning me-1"></i> LICENSE KEY (MÃ BẢN QUYỀN):</label>
-            <input type="text" id="actLicenseKey" class="form-control font-monospace text-uppercase fw-bold" placeholder="FTM-XXXX-XXXX-XXXX" autocomplete="off">
-            <div class="form-text x-small text-muted">Dán chuỗi License Key nhận được từ Admin vào đây.</div>
-          </div>
-
-          <!-- Mã Nhận Diện -->
-          <div class="mb-4">
-            <label class="form-label small fw-bold text-muted mb-1"><i class="fa-solid fa-id-badge text-success me-1"></i> MÃ NHẬN DIỆN NGƯỜI ĐĂNG (TITLE PREFIX):</label>
-            <input type="text" id="actMaNhanDien" class="form-control fw-bold text-primary" placeholder="Ví dụ: TH hoặc NV01 hoặc MINH_DUC" value="TH">
-            <div class="form-text x-small text-muted">Tự động gắn vào tiêu đề mọi bài báo khi đăng web (Ví dụ: <code>TH - Tiêu đề bài báo</code>).</div>
-          </div>
-
-          <button id="btnActKichHoat" class="btn btn-success btn-lg w-100 fw-bold py-2 shadow-sm" onclick="thucHienKichHoat()">
-            <i class="fa-solid fa-rocket me-2"></i> KÍCH HOẠT BẢN QUYỀN
-          </button>
-
-          <div id="actKetQua" class="mt-3"></div>
-        </div>
-        <div class="card-footer bg-light text-center py-2 text-muted x-small">
-          Bản quyền thuộc về Facebook Traffic Master Pro • Supabase Cloud Protection
-        </div>
-      </div>
-    </div>
-  </div>
 </body>
 </html>
