@@ -221,9 +221,7 @@
             </button>
             <ul class="dropdown-menu dropdown-menu-end shadow-sm" style="font-size: 0.85rem; min-width: 220px;">
               <li class="dropdown-header text-uppercase fw-bold text-muted small"><i class="fa-solid fa-bolt text-warning me-1"></i> Xuất Vòng Mới</li>
-              <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="xuatMaster(1, 'us')"><i class="fa-solid fa-flag-usa text-danger me-2"></i><b>Xuất Master 1 (US)</b></a></li>
-              <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="xuatMaster(2, 'us')"><i class="fa-solid fa-flag-usa text-primary me-2"></i><b>Xuất Master 2 (US 2)</b></a></li>
-              <li><hr class="dropdown-divider my-1"></li>
+              <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="xuatMaster(1, 'us')"><i class="fa-solid fa-flag-usa text-danger me-2"></i><b>Xuất Master US</b></a></li>
               <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="xuatMaster(1, 'global')"><i class="fa-solid fa-earth-americas text-success me-2"></i><b>Xuất Master GLOBAL</b></a></li>
             </ul>
           </div>
@@ -235,9 +233,7 @@
             </button>
             <ul class="dropdown-menu dropdown-menu-end shadow-sm" style="font-size: 0.85rem; min-width: 220px;">
               <li class="dropdown-header text-uppercase fw-bold text-muted small"><i class="fa-solid fa-bandage text-warning me-1"></i> Vá dòng CHỜ BÀI</li>
-              <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="vaMaster(1, 'us')"><i class="fa-solid fa-flag-usa text-danger me-2"></i><b>Vá Master 1 (US)</b></a></li>
-              <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="vaMaster(2, 'us')"><i class="fa-solid fa-flag-usa text-primary me-2"></i><b>Vá Master 2 (US 2)</b></a></li>
-              <li><hr class="dropdown-divider my-1"></li>
+              <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="vaMaster(1, 'us')"><i class="fa-solid fa-flag-usa text-danger me-2"></i><b>Vá Master US</b></a></li>
               <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="vaMaster(1, 'global')"><i class="fa-solid fa-earth-americas text-success me-2"></i><b>Vá Master GLOBAL</b></a></li>
             </ul>
           </div>
@@ -982,23 +978,19 @@
                 </button>
                 <ul class="dropdown-menu shadow-sm" style="font-size: 0.85rem; min-width: 230px;">
                   <li class="dropdown-header text-uppercase fw-bold text-muted small"><i class="fa-solid fa-bolt text-warning me-1"></i> Xuất Vòng Mới</li>
-                  <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="xuatMaster(1, 'us')"><i class="fa-solid fa-flag-usa text-danger me-2"></i><b>Xuất Master 1 (US)</b> <span class="text-muted small">(danh_sach_uid.xlsx)</span></a></li>
-                  <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="xuatMaster(2, 'us')"><i class="fa-solid fa-flag-usa text-primary me-2"></i><b>Xuất Master 2 (US 2)</b> <span class="text-muted small">(danh_sach_uid_2.xlsx)</span></a></li>
-                  <li><hr class="dropdown-divider my-1"></li>
-                  <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="xuatMaster(1, 'global')"><i class="fa-solid fa-earth-americas text-success me-2"></i><b>Xuất Master GLOBAL</b> <span class="text-muted small">(MASTER_DANG_BAI_GLOBAL.xlsx)</span></a></li>
+                  <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="xuatMaster(1, 'us')"><i class="fa-solid fa-flag-usa text-danger me-2"></i><b>Xuất Master US</b></a></li>
+                  <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="xuatMaster(1, 'global')"><i class="fa-solid fa-earth-americas text-success me-2"></i><b>Xuất Master GLOBAL</b></a></li>
                 </ul>
               </div>
 
-              <!-- Dropdown Vá MASTER (Vá Master 1, Master 2 & Global) -->
+              <!-- Dropdown Vá MASTER -->
               <div class="dropdown d-inline-block">
                 <button class="btn btn-sm btn-outline-warning dropdown-toggle" type="button" id="btnVaMasterDrop" data-bs-toggle="dropdown" aria-expanded="false">
                   <i class="fa-solid fa-band-aid me-1"></i> Vá dòng CHỜ BÀI
                 </button>
                 <ul class="dropdown-menu shadow-sm" style="font-size: 0.85rem; min-width: 230px;">
                   <li class="dropdown-header text-uppercase fw-bold text-muted small"><i class="fa-solid fa-bandage text-warning me-1"></i> Vá dòng CHỜ BÀI</li>
-                  <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="vaMaster(1, 'us')"><i class="fa-solid fa-flag-usa text-danger me-2"></i><b>Vá Master 1 (US)</b> <span class="text-muted small">(Hiện tại)</span></a></li>
-                  <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="vaMaster(2, 'us')"><i class="fa-solid fa-flag-usa text-primary me-2"></i><b>Vá Master 2 (US 2)</b> <span class="text-muted small">(Mới)</span></a></li>
-                  <li><hr class="dropdown-divider my-1"></li>
+                  <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="vaMaster(1, 'us')"><i class="fa-solid fa-flag-usa text-danger me-2"></i><b>Vá Master US</b></a></li>
                   <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="vaMaster(1, 'global')"><i class="fa-solid fa-earth-americas text-success me-2"></i><b>Vá Master GLOBAL</b></a></li>
                 </ul>
               </div>
@@ -3175,10 +3167,10 @@
       const v = (vung || (typeof VUNG === 'undefined' ? 'us' : VUNG)).toLowerCase();
       const isUS = (v === 'us');
       const tenMaster = (loai === 2 && isUS)
-        ? '🇺🇸 MASTER 2 US (MỚI - MASTER_DANG_BAI_US_2.xlsx)'
-        : (isUS ? '🇺🇸 MASTER 1 US (MASTER_DANG_BAI_US.xlsx)' : '🌍 MASTER GLOBAL (MASTER_DANG_BAI_GLOBAL.xlsx)');
+        ? '🇺🇸 MASTER 2 US (MASTER_DANG_BAI_US_2.xlsx)'
+        : (isUS ? '🇺🇸 MASTER US (MASTER_DANG_BAI_US.xlsx)' : '🌍 MASTER GLOBAL (MASTER_DANG_BAI_GLOBAL.xlsx)');
 
-      if (!confirm(`Xuất ${tenMaster} — VÒNG MỚI?\n\n• Vùng dữ liệu: ${v.toUpperCase()}\n• Ghi ĐÈ file master tương ứng.\n• Chia lại từ đầu: mỗi profile nhận 1 bài MỚI.\n• Muốn lấp dần chỗ trống mà KHÔNG đụng bài cũ → dùng nút "Vá dòng CHỜ BÀI".\n\nBấm OK để xuất vòng mới.`)) return;
+      if (!confirm(`Xuất ${tenMaster} — VÒNG MỚI?\n\n• Vùng dữ liệu: ${v.toUpperCase()}\n• Ghi ĐÈ file master tương ứng.\n• Xuất toàn bộ bài viết hoàn thành ra file Excel để đăng bài.\n\nBấm OK để bắt đầu xuất.`)) return;
 
       showToast(`⏳ Đang xuất ${tenMaster}... Vui lòng đợi trong giây lát.`);
 
@@ -3190,9 +3182,7 @@
       .then(r => r.json())
       .then(d => {
         if (!d.ok) return showToast('❌ ' + d.loi);
-        let thongBao = `🗂️ ${d.file}: ` + d.tong_dong + ' profile, ' + d.so_bai_xuat + ' bài gán, ' + d.so_cho_bai + ' dòng CHỜ BÀI.';
-        const cls = Object.entries(d.cho_lan_sau || {});
-        if (cls.length) thongBao += ' Đợi lần sau: ' + cls.map(([k, v]) => k + ' (' + v + ')').join(' • ');
+        let thongBao = `🗂️ ${d.file}: ` + (d.tong_dong || d.so_bai_xuat) + ' bài viết hoàn chỉnh sẵn sàng!';
         showToast(thongBao);
         if ((d.canh_bao || []).length) console.warn('[MASTER canh bao]', d.canh_bao);
         const a = document.createElement('a');
