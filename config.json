@@ -3,7 +3,7 @@
   "ai": {
     "provider": "custom",
     "api_key": "",
-    "model": "deepseek-v4-flash",
+    "model": "deepseek-v4-flash-lr",
     "base_url": "https://vyceai.com/v1",
     "song_song": 2
   },
