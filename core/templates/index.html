@@ -177,6 +177,18 @@
     }
     .nhom-chip .nhom-so { font-size: .72rem; opacity: .7; }
     .nhom-chip.khong-nguon { opacity: .45; text-decoration: line-through; }
+
+    /* Khóa bảo mật giao diện khi chưa kích hoạt License */
+    body.license-locked {
+      overflow: hidden !important;
+    }
+    body.license-locked .container-fluid,
+    body.license-locked .navbar,
+    body.license-locked #mainTabContent {
+      filter: blur(5px) grayscale(50%) !important;
+      pointer-events: none !important;
+      user-select: none !important;
+    }
   </style>
 </head>
 <body>
@@ -4564,7 +4576,10 @@
         g_licenseData = data;
         capNhatUILicense(data);
         if (!data.valid) {
-          moModalLicense(false); // Chưa kích hoạt -> hiện popup bắt buộc không cho tắt
+          document.body.classList.add('license-locked');
+          moModalLicense(false); // Chưa kích hoạt -> khóa toàn màn hình và bật popup bắt buộc
+        } else {
+          document.body.classList.remove('license-locked');
         }
       } catch (e) {
         console.error("Lỗi kiểm tra bản quyền:", e);
@@ -4581,6 +4596,7 @@
       if (!badge || !txt) return;
 
       if (data.valid) {
+        document.body.classList.remove('license-locked');
         const planText = data.plan === 'vinh_vien' ? 'Vĩnh viễn' : (data.plan || 'Active');
         const name = data.client_name || 'Khách hàng';
         const ma = data.ma_nhan_dien ? ` [${data.ma_nhan_dien}]` : '';
@@ -4588,6 +4604,7 @@
         txt.innerHTML = `<i class="fa-solid fa-crown text-warning me-1"></i><b>${name}</b> (${planText})${ma}`;
         badge.title = `Bản quyền hợp lệ! Nhấp để xem chi tiết.`;
       } else {
+        document.body.classList.add('license-locked');
         badge.className = "badge bg-danger-subtle text-danger border border-danger-subtle px-2 py-1 small";
         txt.innerHTML = `<i class="fa-solid fa-triangle-exclamation text-danger me-1"></i><b>Chưa kích hoạt</b>`;
         badge.title = `Chưa kích hoạt bản quyền! Nhấp để kích hoạt ngay.`;
