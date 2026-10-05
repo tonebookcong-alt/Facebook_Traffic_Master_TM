@@ -3,9 +3,9 @@
   "ai": {
     "provider": "custom",
     "api_key": "",
-    "model": "deepseek-v4-flash-lr",
+    "model": "deepseek-v4-flash",
     "base_url": "https://vyceai.com/v1",
-    "song_song": 2
+    "song_song": 1
   },
   "sheets": {
     "credentials_file": "google_sheets_creds.json",
