@@ -341,8 +341,8 @@
                     <label class="form-label small fw-bold mb-0 text-nowrap">🌐 Web đăng bài:</label>
                     <select id="webDangBai" class="form-select form-select-sm" style="max-width:240px">
                       <option value="">— theo vùng —</option>
-                      <option value="us">🇺🇸 US — primevista24.cfx.bz</option>
-                      <option value="global">🌍 GLOBAL — northvision360.cfx.bz</option>
+                      <option value="us">🇺🇸 US — moneycomehere.cfx.bz</option>
+                      <option value="global">🌍 GLOBAL — moneycomehere.cfx.bz</option>
                     </select>
                     <span class="small text-muted">Tự động theo công tắc vùng trên header</span>
                   </div>
@@ -567,8 +567,8 @@
               </select>
               <select id="batchWebDang" class="form-select form-select-sm" style="width: 230px;" title="Web đăng bài báo (bắt buộc)">
                 <option value="">— 🌐 Chọn WEB ĐĂNG BÀI —</option>
-                <option value="us">🇺🇸 US — primevista24.cfx.bz</option>
-                <option value="global">🌍 GLOBAL — northvision360.cfx.bz</option>
+                <option value="us">🇺🇸 US — moneycomehere.cfx.bz</option>
+                <option value="global">🌍 GLOBAL — moneycomehere.cfx.bz</option>
               </select>
               <button class="btn btn-sm btn-primary" onclick="chayXuLyHangLoat()">
                 <i class="fa-solid fa-bolt me-1"></i> Xử Lý AI Hàng Loạt
@@ -761,8 +761,8 @@
                   <div class="d-flex gap-1 align-items-center">
                     <select id="detailWebDang" class="form-select form-select-sm" style="width: 210px;" title="Web đăng bài báo (bắt buộc)">
                       <option value="">🌐 Web đăng: chọn...</option>
-                      <option value="us">🇺🇸 US — primevista24</option>
-                      <option value="global">🌍 GLOBAL — northvision360</option>
+                      <option value="us">🇺🇸 US — moneycomehere.cfx.bz</option>
+                      <option value="global">🌍 GLOBAL — moneycomehere.cfx.bz</option>
                     </select>
                     <select id="detailFormatType" class="form-select form-select-sm" style="width: 100px;">
                       <option value="1:1">1:1 Vuông</option>
@@ -3619,9 +3619,21 @@
     // =====================================================================
     let VUNG = 'us';
     const TEN_VUNG_UI = {us: '🇺🇸 US', global: '🌍 GLOBAL'};
-    const WEB_CUA_VUNG = {us: 'primevista24.cfx.bz', global: 'northvision360.cfx.bz'};
+    let WEB_CUA_VUNG = {us: 'moneycomehere.cfx.bz', global: 'moneycomehere.cfx.bz'};
+
+    function capNhatTextWebOptions() {
+      ['webDangBai', 'batchWebDang', 'fullAutoWeb', 'detailWebDang'].forEach(id => {
+        const sel = document.getElementById(id);
+        if (!sel) return;
+        const optUs = sel.querySelector('option[value="us"]');
+        if (optUs) optUs.textContent = `🇺🇸 US — ${WEB_CUA_VUNG.us}`;
+        const optGb = sel.querySelector('option[value="global"]');
+        if (optGb) optGb.textContent = `🌍 GLOBAL — ${WEB_CUA_VUNG.global}`;
+      });
+    }
 
     function khoaWebTheoVung() {
+      capNhatTextWebOptions();
       // 4 ô "Web đăng bài" giờ KHÔNG chọn tay nữa — luôn = vùng đang bật.
       ['webDangBai', 'batchWebDang', 'fullAutoWeb', 'detailWebDang'].forEach(id => {
         const sel = document.getElementById(id);
@@ -3638,6 +3650,10 @@
     }
 
     function veCongTacVung(d) {
+      if (d.web_domains) {
+        if (d.web_domains.us) WEB_CUA_VUNG.us = d.web_domains.us;
+        if (d.web_domains.global) WEB_CUA_VUNG.global = d.web_domains.global;
+      }
       VUNG = d.vung || VUNG;
       document.querySelectorAll('#vungSwitch .vung-btn').forEach(b => {
         b.classList.toggle('active', b.dataset.vung === VUNG);
@@ -3768,8 +3784,8 @@
             <div class="d-flex align-items-center gap-2">
               <select id="fullAutoWeb" class="form-select form-select-sm" style="max-width:280px">
                 <option value="">— BẮT BUỘC chọn —</option>
-                <option value="us">🇺🇸 US — primevista24.cfx.bz</option>
-                <option value="global">🌍 GLOBAL — northvision360.cfx.bz</option>
+                <option value="us">🇺🇸 US — moneycomehere.cfx.bz</option>
+                <option value="global">🌍 GLOBAL — moneycomehere.cfx.bz</option>
               </select>
               <span class="small text-muted">Bài báo sẽ đăng lên web này</span>
             </div>
