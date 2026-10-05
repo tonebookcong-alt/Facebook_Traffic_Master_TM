@@ -248,6 +248,9 @@
         <span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1 small d-none d-lg-inline">
           <i class="fa-solid fa-circle-check me-1"></i> Local DB
         </span>
+        <span id="licenseBadge" class="badge bg-primary-subtle text-primary border border-primary-subtle px-2 py-1 small" style="cursor: pointer;" onclick="moModalLicense(true)" title="Thông tin bản quyền">
+          <i class="fa-solid fa-key me-1"></i> <span id="licenseStatusText">Bản quyền</span>
+        </span>
       </div>
     </div>
   </nav>
@@ -3667,6 +3670,7 @@
         .catch(e => { btns.forEach(b => b.disabled = false); showToast('❌ Lỗi đổi vùng: ' + e); });
     }
 
+    kiemTraBanQuyen();
     taiVung();
     setInterval(taiVung, 10000);   // đồng bộ "đang chạy" để khoá công tắc đúng lúc
 
@@ -4547,6 +4551,187 @@
     function napProfileTuMaster() {
       napProfileTu3Master();
     }
+
+    // ========================================================================
+    // HỆ THỐNG QUẢN LÝ BẢN QUYỀN (LICENSE MANAGER)
+    // ========================================================================
+    let g_licenseData = null;
+
+    async function kiemTraBanQuyen(force = false) {
+      try {
+        const res = await fetch(`/api/license/kiem_tra?force=${force ? '1' : '0'}`);
+        const data = await res.json();
+        g_licenseData = data;
+        capNhatUILicense(data);
+        if (!data.valid) {
+          moModalLicense(false); // Chưa kích hoạt -> hiện popup bắt buộc không cho tắt
+        }
+      } catch (e) {
+        console.error("Lỗi kiểm tra bản quyền:", e);
+      }
+    }
+
+    function capNhatUILicense(data) {
+      const badge = document.getElementById("licenseBadge");
+      const txt = document.getElementById("licenseStatusText");
+      const machineSpan = document.getElementById("licMachineId");
+      if (machineSpan && data.machine_id) {
+        machineSpan.textContent = data.machine_id;
+      }
+      if (!badge || !txt) return;
+
+      if (data.valid) {
+        const planText = data.plan === 'vinh_vien' ? 'Vĩnh viễn' : (data.plan || 'Active');
+        const name = data.client_name || 'Khách hàng';
+        const ma = data.ma_nhan_dien ? ` [${data.ma_nhan_dien}]` : '';
+        badge.className = "badge bg-success-subtle text-success border border-success-subtle px-2 py-1 small";
+        txt.innerHTML = `<i class="fa-solid fa-crown text-warning me-1"></i><b>${name}</b> (${planText})${ma}`;
+        badge.title = `Bản quyền hợp lệ! Nhấp để xem chi tiết.`;
+      } else {
+        badge.className = "badge bg-danger-subtle text-danger border border-danger-subtle px-2 py-1 small";
+        txt.innerHTML = `<i class="fa-solid fa-triangle-exclamation text-danger me-1"></i><b>Chưa kích hoạt</b>`;
+        badge.title = `Chưa kích hoạt bản quyền! Nhấp để kích hoạt ngay.`;
+      }
+    }
+
+    function moModalLicense(coTheDong = true) {
+      const modalEl = document.getElementById("modalLicense");
+      if (!modalEl) return;
+      const btnClose = document.getElementById("btnCloseLicense");
+      const modal = bootstrap.Modal.getOrCreateInstance(modalEl, {
+        backdrop: coTheDong ? true : 'static',
+        keyboard: coTheDong
+      });
+      if (btnClose) {
+        btnClose.style.display = coTheDong ? "block" : "none";
+      }
+      if (g_licenseData && g_licenseData.machine_id) {
+        document.getElementById("licMachineId").textContent = g_licenseData.machine_id;
+      }
+      if (g_licenseData && g_licenseData.ma_nhan_dien) {
+        document.getElementById("inputMaNhanDien").value = g_licenseData.ma_nhan_dien;
+      }
+      const alertEl = document.getElementById("licenseAlertMsg");
+      alertEl.className = "alert d-none small py-2 mb-0";
+      modal.show();
+    }
+
+    function copyMachineId() {
+      const m = document.getElementById("licMachineId").textContent;
+      if (m && m !== "Đang lấy...") {
+        navigator.clipboard.writeText(m).then(() => {
+          showToast("📋 Đã sao chép Machine ID: " + m + " (Gửi cho Admin để nhận License Key)");
+        });
+      }
+    }
+
+    async function thucHienKichHoatLicense() {
+      const key = (document.getElementById("inputLicenseKey").value || "").trim().toUpperCase();
+      const ma = (document.getElementById("inputMaNhanDien").value || "").trim().toUpperCase();
+      const alertEl = document.getElementById("licenseAlertMsg");
+      const btn = document.getElementById("btnKichHoatLicense");
+
+      if (!key) {
+        alertEl.className = "alert alert-warning small py-2 mb-0";
+        alertEl.textContent = "⚠️ Vui lòng nhập License Key!";
+        return;
+      }
+      if (!ma) {
+        alertEl.className = "alert alert-warning small py-2 mb-0";
+        alertEl.textContent = "⚠️ Vui lòng nhập Mã nhận diện người đăng (ví dụ: TH, NV01)!";
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = `<span class="spinner-border spinner-border-sm me-1"></span> Đang kết nối máy chủ xác thực...`;
+      alertEl.className = "alert alert-info small py-2 mb-0";
+      alertEl.textContent = "Đang kiểm tra bản quyền trên máy chủ Supabase Cloud...";
+
+      try {
+        const res = await fetch("/api/license/kich_hoat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ license_key: key, ma_nhan_dien: ma })
+        });
+        const data = await res.json();
+        if (data.ok) {
+          alertEl.className = "alert alert-success small py-2 mb-0";
+          alertEl.innerHTML = `🎉 <strong>${data.message}</strong><br>Khách hàng: <b>${data.client_name || ''}</b>. Đang tải lại ứng dụng...`;
+          setTimeout(() => {
+            window.location.reload();
+          }, 1500);
+        } else {
+          btn.disabled = false;
+          btn.innerHTML = `<i class="fa-solid fa-rocket me-1"></i> KÍCH HOẠT BẢN QUYỀN`;
+          alertEl.className = "alert alert-danger small py-2 mb-0";
+          alertEl.innerHTML = `❌ <strong>Kích hoạt thất bại:</strong> ${data.message}`;
+        }
+      } catch (e) {
+        btn.disabled = false;
+        btn.innerHTML = `<i class="fa-solid fa-rocket me-1"></i> KÍCH HOẠT BẢN QUYỀN`;
+        alertEl.className = "alert alert-danger small py-2 mb-0";
+        alertEl.textContent = `❌ Lỗi kết nối: ${e.message}`;
+      }
+    }
   </script>
+
+  <!-- MODAL KÍCH HOẠT BẢN QUYỀN (LICENSE MODAL) -->
+  <div class="modal fade" id="modalLicense" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalLicenseLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content shadow-lg border-0" style="border-radius: 16px; overflow: hidden;">
+        <div class="modal-header text-white" style="background: linear-gradient(135deg, #1B365D 0%, #205493 100%);">
+          <h5 class="modal-title fw-bold" id="modalLicenseLabel">
+            <i class="fa-solid fa-shield-halved text-warning me-2"></i> Kích Hoạt Bản Quyền
+          </h5>
+          <button type="button" class="btn-close btn-close-white" id="btnCloseLicense" data-bs-dismiss="modal" aria-label="Close" style="display: none;"></button>
+        </div>
+        <div class="modal-body p-4">
+          <div class="text-center mb-3">
+            <div class="d-inline-flex p-3 rounded-circle bg-light mb-2 text-primary">
+              <i class="fa-solid fa-laptop-code fa-2x"></i>
+            </div>
+            <h6 class="fw-bold mb-1">FACEBOOK TRAFFIC MASTER</h6>
+            <p class="text-muted small mb-0">Vui lòng nhập License Key được cấp để kích hoạt sử dụng trên máy tính này.</p>
+          </div>
+
+          <div class="alert alert-info py-2 px-3 small d-flex align-items-center justify-content-between mb-3">
+            <div>
+              <i class="fa-solid fa-fingerprint me-1"></i> <strong>Machine ID:</strong>
+              <span id="licMachineId" class="fw-bold text-dark font-monospace ms-1">Đang lấy...</span>
+            </div>
+            <button class="btn btn-sm btn-outline-primary py-0 px-2" type="button" onclick="copyMachineId()" title="Sao chép Machine ID">
+              <i class="fa-regular fa-copy"></i> Copy
+            </button>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-bold small text-muted">MÃ BẢN QUYỀN (LICENSE KEY) <span class="text-danger">*</span></label>
+            <div class="input-group">
+              <span class="input-group-text bg-light"><i class="fa-solid fa-key text-muted"></i></span>
+              <input type="text" class="form-control font-monospace text-uppercase" id="inputLicenseKey" placeholder="FTM-XXXX-XXXX-XXXX" autocomplete="off">
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-bold small text-muted">MÃ NHẬN DIỆN NGƯỜI ĐĂNG (TITLE PREFIX) <span class="text-danger">*</span></label>
+            <div class="input-group">
+              <span class="input-group-text bg-light"><i class="fa-solid fa-user-tag text-muted"></i></span>
+              <input type="text" class="form-control font-monospace text-uppercase" id="inputMaNhanDien" placeholder="vd: TH, NV01, HONG_DUC..." maxlength="20">
+            </div>
+            <div class="form-text text-muted" style="font-size: 0.78rem;">
+              Mã này sẽ tự động gắn vào đầu tiêu đề bài viết (VD: <em>TH - Tiêu đề bài báo...</em>) để nhận diện bài của bạn khi đăng web, chống trùng lặp.
+            </div>
+          </div>
+
+          <div id="licenseAlertMsg" class="alert d-none small py-2 mb-0"></div>
+        </div>
+        <div class="modal-footer bg-light p-3">
+          <button type="button" class="btn btn-primary w-100 fw-bold py-2 shadow-sm" id="btnKichHoatLicense" onclick="thucHienKichHoatLicense()">
+            <i class="fa-solid fa-rocket me-1"></i> KÍCH HOẠT BẢN QUYỀN
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
