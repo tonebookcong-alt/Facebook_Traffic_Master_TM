@@ -3698,7 +3698,6 @@
         .catch(e => { btns.forEach(b => b.disabled = false); showToast('❌ Lỗi đổi vùng: ' + e); });
     }
 
-    kiemTraBanQuyen();
     taiVung();
     setInterval(taiVung, 10000);   // đồng bộ "đang chạy" để khoá công tắc đúng lúc
 
@@ -4706,6 +4705,9 @@
         alertEl.textContent = `❌ Lỗi kết nối: ${e.message}`;
       }
     }
+
+    // Tự động kiểm tra bản quyền khi tải trang
+    kiemTraBanQuyen();
   </script>
 
   <!-- MODAL KÍCH HOẠT BẢN QUYỀN (LICENSE MODAL) -->
