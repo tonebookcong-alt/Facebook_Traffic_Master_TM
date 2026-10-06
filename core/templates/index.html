@@ -4598,6 +4598,8 @@
         }
       } catch (e) {
         console.error("Lỗi kiểm tra bản quyền:", e);
+        document.body.classList.add('license-locked');
+        moModalLicense(false);
       }
     }
 
@@ -4630,22 +4632,73 @@
       const modalEl = document.getElementById("modalLicense");
       if (!modalEl) return;
       const btnClose = document.getElementById("btnCloseLicense");
-      const modal = bootstrap.Modal.getOrCreateInstance(modalEl, {
-        backdrop: coTheDong ? true : 'static',
-        keyboard: coTheDong
-      });
-      if (btnClose) {
-        btnClose.style.display = coTheDong ? "block" : "none";
+      const modalTitle = document.getElementById("modalLicenseLabel");
+      const viewChua = document.getElementById("viewLicenseChuaKichHoat");
+      const viewDa = document.getElementById("viewLicenseDaKichHoat");
+
+      const isDaKichHoat = g_licenseData && g_licenseData.valid;
+
+      if (!isDaKichHoat) {
+        // TRẠNG THÁI 1: CHƯA KÍCH HOẠT (BẮT BUỘC NHẬP HẾT MỚI ĐƯỢC VÀO)
+        document.body.classList.add('license-locked');
+        if (viewChua) viewChua.classList.remove("d-none");
+        if (viewDa) viewDa.classList.add("d-none");
+        if (btnClose) btnClose.style.display = "none";
+        if (modalTitle) {
+          modalTitle.innerHTML = `<i class="fa-solid fa-shield-halved text-warning me-2"></i> Kích Hoạt Bản Quyền`;
+        }
+
+        if (g_licenseData && g_licenseData.machine_id) {
+          document.getElementById("licMachineId").textContent = g_licenseData.machine_id;
+        }
+        if (g_licenseData && g_licenseData.ma_nhan_dien) {
+          document.getElementById("inputMaNhanDien").value = g_licenseData.ma_nhan_dien;
+        }
+
+        const modal = bootstrap.Modal.getOrCreateInstance(modalEl, {
+          backdrop: 'static',
+          keyboard: false
+        });
+        const alertEl = document.getElementById("licenseAlertMsg");
+        if (alertEl) alertEl.className = "alert d-none small py-2 mb-0";
+        modal.show();
+      } else {
+        // TRẠNG THÁI 2: ĐÃ KÍCH HOẠT (HIỂN THỊ ĐẦY ĐỦ THÔNG TIN BẢN QUYỀN)
+        document.body.classList.remove('license-locked');
+        if (viewChua) viewChua.classList.add("d-none");
+        if (viewDa) viewDa.classList.remove("d-none");
+        if (btnClose) btnClose.style.display = "block";
+        if (modalTitle) {
+          modalTitle.innerHTML = `<i class="fa-solid fa-crown text-warning me-2"></i> Thông Tin Bản Quyền`;
+        }
+
+        // Đổ thông tin chi tiết vào View đã kích hoạt
+        const nameEl = document.getElementById("infoClientName");
+        if (nameEl) nameEl.textContent = g_licenseData.client_name || "Khách hàng VIP";
+
+        const planEl = document.getElementById("infoPlan");
+        if (planEl) {
+          planEl.textContent = g_licenseData.plan === 'vinh_vien' ? 'Vĩnh Viễn (Trọn Đời Theo Máy)' : (g_licenseData.plan || 'Vĩnh Viễn');
+        }
+
+        const keyEl = document.getElementById("infoLicenseKey");
+        if (keyEl) keyEl.textContent = g_licenseData.license_key || "Đã xác thực Supabase";
+
+        const mIdEl = document.getElementById("infoMachineId");
+        if (mIdEl) mIdEl.textContent = g_licenseData.machine_id || "---";
+
+        const maBadge = document.getElementById("infoMaNhanDienBadge");
+        if (maBadge) maBadge.textContent = g_licenseData.ma_nhan_dien || "CHƯA ĐẶT";
+
+        const inputDoiMa = document.getElementById("inputDoiMaNhanDien");
+        if (inputDoiMa) inputDoiMa.value = g_licenseData.ma_nhan_dien || "";
+
+        const modal = bootstrap.Modal.getOrCreateInstance(modalEl, {
+          backdrop: true,
+          keyboard: true
+        });
+        modal.show();
       }
-      if (g_licenseData && g_licenseData.machine_id) {
-        document.getElementById("licMachineId").textContent = g_licenseData.machine_id;
-      }
-      if (g_licenseData && g_licenseData.ma_nhan_dien) {
-        document.getElementById("inputMaNhanDien").value = g_licenseData.ma_nhan_dien;
-      }
-      const alertEl = document.getElementById("licenseAlertMsg");
-      alertEl.className = "alert d-none small py-2 mb-0";
-      modal.show();
     }
 
     function copyMachineId() {
@@ -4654,6 +4707,50 @@
         navigator.clipboard.writeText(m).then(() => {
           showToast("📋 Đã sao chép Machine ID: " + m + " (Gửi cho Admin để nhận License Key)");
         });
+      }
+    }
+
+    function copyInfoMachineId() {
+      const m = document.getElementById("infoMachineId").textContent;
+      if (m && m !== "---") {
+        navigator.clipboard.writeText(m).then(() => {
+          showToast("📋 Đã sao chép Machine ID: " + m);
+        });
+      }
+    }
+
+    function copyInfoLicenseKey() {
+      const k = document.getElementById("infoLicenseKey").textContent;
+      if (k) {
+        navigator.clipboard.writeText(k).then(() => {
+          showToast("📋 Đã sao chép License Key: " + k);
+        });
+      }
+    }
+
+    async function thucHienDoiMaNhanDien() {
+      const ma = (document.getElementById("inputDoiMaNhanDien").value || "").trim().toUpperCase();
+      if (!ma) {
+        showToast("⚠️ Vui lòng nhập mã nhận diện (ví dụ: TH)!");
+        return;
+      }
+      try {
+        const res = await fetch("/api/license/doi_ma_nhan_dien", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ma_nhan_dien: ma })
+        });
+        const data = await res.json();
+        if (data.ok) {
+          showToast("✅ Đã cập nhật mã nhận diện thành: " + ma);
+          if (g_licenseData) g_licenseData.ma_nhan_dien = ma;
+          document.getElementById("infoMaNhanDienBadge").textContent = ma;
+          capNhatUILicense(g_licenseData);
+        } else {
+          showToast("❌ " + (data.message || "Cập nhật thất bại"));
+        }
+      } catch (e) {
+        showToast("❌ Lỗi: " + e.message);
       }
     }
 
@@ -4706,13 +4803,15 @@
       }
     }
 
-    // Tự động kiểm tra bản quyền khi tải trang
-    kiemTraBanQuyen();
+    // Tự động kiểm tra bản quyền ngay khi tải trang
+    document.addEventListener("DOMContentLoaded", function() {
+      kiemTraBanQuyen();
+    });
   </script>
 
-  <!-- MODAL KÍCH HOẠT BẢN QUYỀN (LICENSE MODAL) -->
+  <!-- MODAL BẢN QUYỀN (LICENSE MODAL) -->
   <div class="modal fade" id="modalLicense" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalLicenseLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 520px;">
       <div class="modal-content shadow-lg border-0" style="border-radius: 16px; overflow: hidden;">
         <div class="modal-header text-white" style="background: linear-gradient(135deg, #1B365D 0%, #205493 100%);">
           <h5 class="modal-title fw-bold" id="modalLicenseLabel">
@@ -4720,35 +4819,42 @@
           </h5>
           <button type="button" class="btn-close btn-close-white" id="btnCloseLicense" data-bs-dismiss="modal" aria-label="Close" style="display: none;"></button>
         </div>
-        <div class="modal-body p-4">
+
+        <!-- =============================================================== -->
+        <!-- VIEW 1: DÀNH CHO MÁY CHƯA KÍCH HOẠT (BẮT BUỘC NHẬP HẾT MỚI VÀO) -->
+        <!-- =============================================================== -->
+        <div id="viewLicenseChuaKichHoat" class="modal-body p-4">
           <div class="text-center mb-3">
-            <div class="d-inline-flex p-3 rounded-circle bg-light mb-2 text-primary">
+            <div class="d-inline-flex p-3 rounded-circle bg-light mb-2 text-primary shadow-sm">
               <i class="fa-solid fa-laptop-code fa-2x"></i>
             </div>
-            <h6 class="fw-bold mb-1">FACEBOOK TRAFFIC MASTER</h6>
-            <p class="text-muted small mb-0">Vui lòng nhập License Key được cấp để kích hoạt sử dụng trên máy tính này.</p>
+            <h6 class="fw-bold mb-1 text-dark">FACEBOOK TRAFFIC MASTER</h6>
+            <p class="text-muted small mb-0">Hệ thống yêu cầu kích hoạt bản quyền trước khi vào sử dụng phần mềm.</p>
           </div>
 
-          <div class="alert alert-info py-2 px-3 small d-flex align-items-center justify-content-between mb-3">
+          <div class="alert alert-info py-2 px-3 small d-flex align-items-center justify-content-between mb-3 border-0 shadow-sm" style="background: #eef6ff;">
             <div>
-              <i class="fa-solid fa-fingerprint me-1"></i> <strong>Machine ID:</strong>
+              <i class="fa-solid fa-fingerprint me-1 text-primary"></i> <strong>Machine ID:</strong>
               <span id="licMachineId" class="fw-bold text-dark font-monospace ms-1">Đang lấy...</span>
             </div>
-            <button class="btn btn-sm btn-outline-primary py-0 px-2" type="button" onclick="copyMachineId()" title="Sao chép Machine ID">
+            <button class="btn btn-sm btn-outline-primary py-0 px-2 fw-bold" type="button" onclick="copyMachineId()" title="Sao chép Machine ID">
               <i class="fa-regular fa-copy"></i> Copy
             </button>
           </div>
 
           <div class="mb-3">
-            <label class="form-label fw-bold small text-muted">MÃ BẢN QUYỀN (LICENSE KEY) <span class="text-danger">*</span></label>
+            <label class="form-label fw-bold small text-dark mb-1">MÃ BẢN QUYỀN (LICENSE KEY) <span class="text-danger">*</span></label>
             <div class="input-group">
               <span class="input-group-text bg-light"><i class="fa-solid fa-key text-muted"></i></span>
               <input type="text" class="form-control font-monospace text-uppercase" id="inputLicenseKey" placeholder="FTM-XXXX-XXXX-XXXX" autocomplete="off">
             </div>
+            <div class="form-text text-muted" style="font-size: 0.78rem;">
+              Nhập mã bản quyền được cấp tương ứng với Machine ID ở trên.
+            </div>
           </div>
 
           <div class="mb-3">
-            <label class="form-label fw-bold small text-muted">MÃ NHẬN DIỆN NGƯỜI ĐĂNG (TITLE PREFIX) <span class="text-danger">*</span></label>
+            <label class="form-label fw-bold small text-dark mb-1">MÃ NHẬN DIỆN NGƯỜI ĐĂNG (TITLE PREFIX) <span class="text-danger">*</span></label>
             <div class="input-group">
               <span class="input-group-text bg-light"><i class="fa-solid fa-user-tag text-muted"></i></span>
               <input type="text" class="form-control font-monospace text-uppercase" id="inputMaNhanDien" placeholder="vd: TH, NV01, HONG_DUC..." maxlength="20">
@@ -4758,11 +4864,78 @@
             </div>
           </div>
 
-          <div id="licenseAlertMsg" class="alert d-none small py-2 mb-0"></div>
-        </div>
-        <div class="modal-footer bg-light p-3">
+          <div id="licenseAlertMsg" class="alert d-none small py-2 mb-3"></div>
+
           <button type="button" class="btn btn-primary w-100 fw-bold py-2 shadow-sm" id="btnKichHoatLicense" onclick="thucHienKichHoatLicense()">
-            <i class="fa-solid fa-rocket me-1"></i> KÍCH HOẠT BẢN QUYỀN
+            <i class="fa-solid fa-rocket me-1"></i> KÍCH HOẠT BẢN QUYỀN NGAY
+          </button>
+        </div>
+
+        <!-- =============================================================== -->
+        <!-- VIEW 2: DÀNH CHO MÁY ĐÃ KÍCH HOẠT (HIỂN THỊ ĐẦY ĐỦ THÔNG TIN)  -->
+        <!-- =============================================================== -->
+        <div id="viewLicenseDaKichHoat" class="modal-body p-4 d-none">
+          <!-- Banner Bản quyền hợp lệ -->
+          <div class="p-3 rounded-3 mb-3 text-center border border-success-subtle shadow-sm" style="background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);">
+            <div class="d-inline-flex p-2 rounded-circle bg-white text-success mb-2 shadow-sm">
+              <i class="fa-solid fa-circle-check fa-2x"></i>
+            </div>
+            <h6 class="fw-bold text-success mb-0">BẢN QUYỀN ĐÃ KÍCH HOẠT HỢP LỆ</h6>
+            <div class="text-muted small mt-1">Trạng thái: <strong class="text-dark">Supabase Cloud Verified</strong></div>
+          </div>
+
+          <!-- Bảng chi tiết thông tin -->
+          <div class="card border-0 bg-light rounded-3 p-3 mb-3 shadow-sm">
+            <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+              <span class="text-muted small"><i class="fa-solid fa-user me-1"></i> Chủ sở hữu:</span>
+              <strong id="infoClientName" class="text-primary">---</strong>
+            </div>
+            <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+              <span class="text-muted small"><i class="fa-solid fa-award me-1"></i> Gói bản quyền:</span>
+              <span id="infoPlan" class="badge bg-warning text-dark fw-bold">Vĩnh Viễn (Trọn Đời)</span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+              <span class="text-muted small"><i class="fa-solid fa-key me-1"></i> License Key:</span>
+              <div class="d-flex align-items-center gap-2">
+                <span id="infoLicenseKey" class="font-monospace fw-bold small text-dark">---</span>
+                <button class="btn btn-sm btn-outline-secondary py-0 px-1" type="button" onclick="copyInfoLicenseKey()" title="Sao chép License Key">
+                  <i class="fa-regular fa-copy"></i>
+                </button>
+              </div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+              <span class="text-muted small"><i class="fa-solid fa-fingerprint me-1"></i> Machine ID:</span>
+              <div class="d-flex align-items-center gap-2">
+                <span id="infoMachineId" class="font-monospace small text-dark">---</span>
+                <button class="btn btn-sm btn-outline-secondary py-0 px-1" type="button" onclick="copyInfoMachineId()" title="Sao chép Machine ID">
+                  <i class="fa-regular fa-copy"></i>
+                </button>
+              </div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center py-2">
+              <span class="text-muted small"><i class="fa-solid fa-id-badge me-1"></i> Mã nhận diện hiện tại:</span>
+              <span id="infoMaNhanDienBadge" class="badge bg-primary px-2 py-1 fs-6 font-monospace">---</span>
+            </div>
+          </div>
+
+          <!-- Khối sửa đổi mã nhận diện người đăng -->
+          <div class="p-3 border rounded-3 bg-white shadow-sm mb-3">
+            <label class="form-label fw-bold small text-dark mb-1">
+              <i class="fa-solid fa-pen-to-square text-primary me-1"></i> Đổi Mã Nhận Diện Người Đăng (Title Prefix)
+            </label>
+            <div class="input-group input-group-sm">
+              <input type="text" class="form-control font-monospace text-uppercase" id="inputDoiMaNhanDien" placeholder="ví dụ: TH, NV01" maxlength="20">
+              <button class="btn btn-outline-primary fw-bold px-3" type="button" onclick="thucHienDoiMaNhanDien()">
+                <i class="fa-solid fa-floppy-disk me-1"></i> Lưu mã mới
+              </button>
+            </div>
+            <div class="form-text text-muted" style="font-size: 0.75rem;">
+              Bạn có thể thay đổi tiền tố bài báo bất cứ lúc nào (VD: <em>TH - Tiêu đề</em>).
+            </div>
+          </div>
+
+          <button type="button" class="btn btn-secondary w-100 fw-bold py-2 shadow-sm" data-bs-dismiss="modal">
+            <i class="fa-solid fa-check me-1"></i> ĐÓNG CỬA SỔ
           </button>
         </div>
       </div>
